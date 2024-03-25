@@ -1,12 +1,20 @@
+
 {
   "Author": "boco-bot",
   "Name": "Action Snoop",
   "Punchline": "View STQ-related info on nearby players.",
-  "Description": "Use /snoop",
+  "Description": "View STQ-related info on nearby players.",
   "InternalName": "actionSnoop",
+  "AssemblyVersion": "0.0.0",
+  "TestingAssemblyVersion": "0.0.0",
+  "RepoUrl": "https://github.com/boco-bot/ActionSnoop/",
   "ApplicableVersion": "any",
+  "DalamudApiLevel": 9,
+  "DownloadLinkInstall": "https://github.com/boco-bot/ActionSnoop/releases/download/v0.0.0/Release.zip",
+  "DownloadLinkTesting": "https://github.com/boco-bot/ActionSnoop/releases/download/v0.0.0/Release.zip",
+  "DownloadLinkUpdate": "https://github.com/boco-bot/ActionSnoop/releases/download/v0.0.0/Release.zip",
+  "IconUrl": "https://raw.githubusercontent.com/boco-bot/ActionSnoop/blob/main/images/icon.png",
   "Tags": [
     "save the queen"
-  ],
-  "RepoUrl": "https://github.com/boco-bot/ActionSnoop"
+  ]
 }

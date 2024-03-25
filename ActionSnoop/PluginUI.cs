@@ -15,7 +15,6 @@ namespace ActionSnoop
     class PluginUI : IDisposable
     {
         private string searchText = string.Empty;
-        private uint augh = 0;
         const float UIMinWidth = 310;
         const float UIMinHeight = 100;
         const float UIMaxWidth = 335;
@@ -90,7 +89,7 @@ namespace ActionSnoop
 
             if (ImGui.Begin("Action Snooper", ref visible, ImGuiWindowFlags.AlwaysAutoResize))
             {
-                ImGui.SetNextItemWidth(-20 * ImGui.GetIO().FontGlobalScale);
+                ImGui.SetNextItemWidth(-1 * ImGui.GetIO().FontGlobalScale);
                 ImGui.InputText("", ref searchText, 256);
                 if (ImGui.BeginTable("table1", 5, tableFlags))
                 {
