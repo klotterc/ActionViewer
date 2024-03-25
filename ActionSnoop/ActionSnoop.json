@@ -1,4 +1,3 @@
-
 {
   "Author": "boco-bot",
   "Name": "Action Snoop",
@@ -7,12 +6,12 @@
   "InternalName": "actionSnoop",
   "AssemblyVersion": "0.0.0",
   "TestingAssemblyVersion": "0.0.0",
-  "RepoUrl": "https://github.com/boco-bot/ActionSnoop/",
+  "RepoUrl": "https://github.com/boco-bot/ActionSnoop",
   "ApplicableVersion": "any",
   "DalamudApiLevel": 9,
-  "DownloadLinkInstall": "https://github.com/boco-bot/ActionSnoop/releases/download/v0.0.0/Release.zip",
-  "DownloadLinkTesting": "https://github.com/boco-bot/ActionSnoop/releases/download/v0.0.0/Release.zip",
-  "DownloadLinkUpdate": "https://github.com/boco-bot/ActionSnoop/releases/download/v0.0.0/Release.zip",
+  "DownloadLinkInstall": "https://github.com/boco-bot/ActionSnoop/releases/download/v0.0.0/actionSnoop.zip",
+  "DownloadLinkTesting": "https://github.com/boco-bot/ActionSnoop/releases/download/v0.0.0/actionSnoop.zip",
+  "DownloadLinkUpdate": "https://github.com/boco-bot/ActionSnoop/releases/download/v0.0.0/actionSnoop.zip",
   "IconUrl": "https://raw.githubusercontent.com/boco-bot/ActionSnoop/blob/main/images/icon.png",
   "Tags": [
     "save the queen"
