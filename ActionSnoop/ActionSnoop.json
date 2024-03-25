@@ -1,0 +1,12 @@
+{
+  "Author": "boco-bot",
+  "Name": "Action Snoop",
+  "Punchline": "View STQ-related info on nearby players.",
+  "Description": "Use /snoop",
+  "InternalName": "actionSnoop",
+  "ApplicableVersion": "any",
+  "Tags": [
+    "save the queen"
+  ],
+  "RepoUrl": "https://github.com/RedMage1993/MimicryHelper"
+}
