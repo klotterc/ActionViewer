@@ -1,0 +1,21 @@
+[
+  {
+    "Author": "boco-bot",
+    "Name": "ActionSnoop",
+    "InternalName": "actionSnoop",
+    "Punchline": "View STQ-related info of nearby players",
+    "Description": "Use /snoop to view STQ-related info of nearby players",
+    "AssemblyVersion": "0.0.0.0",
+    "TestingAssemblyVersion": "0.0.0.0",
+    "RepoUrl": "https://github.com/boco-bot/ActionSnoop",
+    "ApplicableVersion": "any",
+    "DalamudApiLevel": 9,
+    "Tags": [
+      "stq"
+    ],
+    "IconUrl": "https://github.com/boco-bot/ActionSnoop/blob/main/ActionSnoop/images/icon.png",
+    "DownloadLinkInstall": "https://github.com/boco-bot/ActionSnoop/releases/download/v0.0.0.0/Release.zip",
+    "DownloadLinkTesting": "https://github.com/boco-bot/ActionSnoop/releases/download/v0.0.0.0/Release.zip",
+    "DownloadLinkUpdate": "https://github.com/boco-bot/ActionSnoop/releases/download/v0.0.0.0/Release.zip"
+  }
+]
