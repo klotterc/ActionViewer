@@ -13,7 +13,7 @@
     "Tags": [
       "stq"
     ],
-    "IconUrl": "https://github.com/boco-bot/ActionSnoop/blob/main/ActionSnoop/images/icon.png",
+    "IconUrl": "https://raw.githubusercontent.com/boco-bot/ActionSnoop/main/ActionSnoop/images/icon.png",
     "DownloadLinkInstall": "https://github.com/boco-bot/ActionSnoop/releases/download/v0.0.1.0/Release.zip",
     "DownloadLinkTesting": "https://github.com/boco-bot/ActionSnoop/releases/download/v0.0.1.0/Release.zip",
     "DownloadLinkUpdate": "https://github.com/boco-bot/ActionSnoop/releases/download/v0.0.1.0/Release.zip"
