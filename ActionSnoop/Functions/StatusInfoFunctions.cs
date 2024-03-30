@@ -14,7 +14,6 @@ namespace ActionSnoop.Functions
         private static List<int> essenceIds = new List<int>() { 2311, 2312, 2313, 2314, 2315, 2316, 2317, 2318, 2319, 2320, 2321, 2322, 2323, 2324, 2325, 2434, 2435, 2436, 2437, 2438, 2439, };
         private static StatusInfo GetStatusInfo(StatusList statusList)
         {
-            int leftId = 0;
             StatusInfo statusInfo = new StatusInfo();
 
             foreach (Status status in statusList)
@@ -27,7 +26,7 @@ namespace ActionSnoop.Functions
                 if (statusId.Equals(2348))
                 {
                     statusInfo.leftId = status.Param % 256;
-                    statusInfo.rightId = (status.Param - leftId) / 256;
+                    statusInfo.rightId = (status.Param - statusInfo.leftId) / 256;
 
                     if (statusInfo.leftId == 71 || statusInfo.leftId == 72)
                     {
@@ -73,7 +72,7 @@ namespace ActionSnoop.Functions
                      * char reminiscence ID (or -1)
                      */
 
-                    StatusInfo statusInfo = StatusInfoFunctions.GetStatusInfo(statusList);
+                    StatusInfo statusInfo = GetStatusInfo(statusList);
 
                     if ((searchText == string.Empty ||
                             (statusInfo.rightIconID != 33 && ((BozjaActions)statusInfo.rightId).ToString().Replace("_", " ").ToLowerInvariant().IndexOf(searchText.ToLowerInvariant()) != -1) ||
@@ -88,7 +87,13 @@ namespace ActionSnoop.Functions
                         //ImGui.Image(Plugin.TextureProvider.GetIcon(62400 + jobId)!.ImGuiHandle, iconSizeVec, Vector2.Zero, Vector2.One);
                         ImGui.Image(Plugin.TextureProvider.GetIcon(62400 + jobId)!.ImGuiHandle, iconSizeVec, Vector2.Zero, Vector2.One);
                         ImGui.TableNextColumn();
-                        ImGui.Text(playerFirstLast[0] + "\n" + playerFirstLast[1]);
+                        ImGui.Selectable(playerFirstLast[0] + " " + playerFirstLast[1], false);
+                        var hover = ImGui.IsItemHovered(ImGuiHoveredFlags.AllowWhenDisabled);
+                        var left = hover && ImGui.IsMouseClicked(ImGuiMouseButton.Left);
+                        if (left)
+                        {
+                            Plugin.TargetManager.Target = character;
+                        }
 
                         // essence
                         ImGui.TableNextColumn();

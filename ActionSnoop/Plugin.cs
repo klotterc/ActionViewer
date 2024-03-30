@@ -1,4 +1,5 @@
 ﻿using ActionSnoop.Windows;
+using Dalamud.Game.ClientState.Objects;
 using Dalamud.Game.Command;
 using Dalamud.Interface.Windowing;
 using Dalamud.IoC;
@@ -12,6 +13,8 @@ namespace ActionSnoop
         public string Name => "ActionSnoop";
 
         private const string commandName = "/snoop";
+        
+        [PluginService] public static ITargetManager TargetManager { get; private set; } = null!;
 
         [PluginService] public static DalamudPluginInterface PluginInterface { get; private set; } = null!;
         [PluginService] public static ITextureProvider TextureProvider { get; private set; } = null!;
