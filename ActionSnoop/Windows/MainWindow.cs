@@ -26,7 +26,7 @@ public class MainWindow : Window
             MinimumSize = new Vector2(300, 300) * ImGuiHelpers.GlobalScale,
             MaximumSize = new Vector2(float.MaxValue, float.MaxValue)
         };
-        Size = new Vector2(600, 400);
+        Size = new Vector2(310, 200);
         SizeCondition = ImGuiCond.FirstUseEver;
 
         this.plugin = plugin;
