@@ -1,13 +1,9 @@
-﻿using Dalamud.Game.ClientState.Objects.SubKinds;
+﻿using ActionSnoop.Windows;
 using Dalamud.Game.Command;
-using Dalamud.Hooking;
+using Dalamud.Interface.Windowing;
 using Dalamud.IoC;
-using Dalamud.Logging;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
-using FFXIVClientStructs.FFXIV.Client.Game;
-using System;
-using System.Collections.Generic;
 
 namespace ActionSnoop
 {
@@ -19,9 +15,11 @@ namespace ActionSnoop
 
         [PluginService] public static DalamudPluginInterface PluginInterface { get; private set; } = null!;
         [PluginService] public static ITextureProvider TextureProvider { get; private set; } = null!;
+
+        public readonly WindowSystem WindowSystem = new("ActionSnoop");
+        public readonly MainWindow MainWindow;
         private Configuration Configuration { get; init; }
-        private IActionSnoop ActionSnoop { get; init; }
-        private PluginUI PluginUi { get; init; }
+        public IActionSnoop ActionSnoop { get; init; }
 
         public Plugin(DalamudPluginInterface pluginInterface)
         {
@@ -30,10 +28,16 @@ namespace ActionSnoop
             Configuration = PluginInterface.GetPluginConfig() as Configuration ?? new Configuration();
             Configuration.Initialize(Services.PluginInterface);
 
+            this.MainWindow = new MainWindow(this);
+            this.WindowSystem.AddWindow(this.MainWindow);
+
+            PluginInterface.UiBuilder.Draw += this.DrawUI;
+            PluginInterface.UiBuilder.OpenConfigUi += this.DrawConfigUI;
+
             ActionSnoop = new ActionSnoop();
 
             // you might normally want to embed resources and load them from the manifest stream
-            PluginUi = new PluginUI(Configuration, ActionSnoop);
+            //PluginUi = new PluginUI(Configuration, ActionSnoop);
 
             Services.Commands.AddHandler(commandName, new CommandInfo(OnCommand)
             {
@@ -46,18 +50,23 @@ namespace ActionSnoop
 
         public void Dispose()
         {
-            PluginUi.Dispose();
+            WindowSystem.RemoveAllWindows();
             Services.Commands.RemoveHandler(commandName);
         }
 
         private void OnCommand(string command, string args)
         {
-            this.PluginUi.Visible = !this.PluginUi.Visible;
+            this.MainWindow.IsOpen ^= true;
         }
 
         private void DrawUI()
         {
-            this.PluginUi.Draw();
+            WindowSystem.Draw();
+        }
+
+        public void DrawConfigUI()
+        {
+            this.MainWindow.IsOpen = true;
         }
 
         //private void DrawConfigUI()
