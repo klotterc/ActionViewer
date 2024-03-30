@@ -1,9 +1,6 @@
 ﻿using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Objects.Types;
-using FFXIVClientStructs.FFXIV.Client.Game;
-using System;
 using System.Collections.Generic;
-using System.Numerics;
 
 namespace ActionSnoop
 {

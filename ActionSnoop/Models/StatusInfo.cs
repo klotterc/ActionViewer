@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ActionSnoop.Models
+﻿namespace ActionSnoop.Models
 {
     public class StatusInfo
     {
         public int essenceId { get; set; }
         public int leftId { get; set; }
         public int rightId { get; set; }
-        public uint essenceIconID {
+        public uint essenceIconID
+        {
             get
             {
                 if (essenceId >= 2311 && essenceId <= 2325)
@@ -24,7 +19,7 @@ namespace ActionSnoop.Models
                 }
                 return 26;
             }
-        
+
         }
         public uint rightIconID
         {

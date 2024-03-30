@@ -1,22 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using ActionSnoop;
-using ActionSnoop.Enums;
-using ActionSnoop.Functions;
-using ActionSnoop.Models;
+﻿using ActionSnoop.Functions;
 using ActionSnoop.Windows;
 using Dalamud.Game.ClientState.Objects.SubKinds;
-using Dalamud.Game.ClientState.Statuses;
-using Dalamud.Interface.Utility;
-using Dalamud.Logging;
-using Dalamud.Utility;
 using ImGuiNET;
+using System.Collections.Generic;
 
 namespace ActionSnoop.Tabs;
 
-public class MainTab : MainWindowTab {
+public class MainTab : MainWindowTab
+{
     private string searchText = string.Empty;
 
     public MainTab(Plugin plugin) : base("Main", plugin) { }

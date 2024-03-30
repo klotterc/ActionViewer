@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Numerics;
-using Dalamud.Interface;
-using Dalamud.Interface.Internal.Windows.Settings;
+﻿using ActionSnoop.Tabs;
 using Dalamud.Interface.Utility;
 using Dalamud.Interface.Windowing;
 using ImGuiNET;
-using ActionSnoop.Tabs;
+using System.Collections.Generic;
+using System.Numerics;
 
 namespace ActionSnoop.Windows;
 

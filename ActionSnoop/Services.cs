@@ -1,10 +1,6 @@
-﻿using Dalamud.Game.Gui;
-using Dalamud.Game.ClientState.Objects;
-using Dalamud.Game.ClientState;
-using Dalamud.IoC;
+﻿using Dalamud.IoC;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
-using Dalamud.Game.Command;
 
 namespace ActionSnoop
 {

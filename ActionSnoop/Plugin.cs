@@ -1,15 +1,9 @@
 ﻿using ActionSnoop.Windows;
-using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.Command;
-using Dalamud.Hooking;
 using Dalamud.Interface.Windowing;
 using Dalamud.IoC;
-using Dalamud.Logging;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
-using FFXIVClientStructs.FFXIV.Client.Game;
-using System;
-using System.Collections.Generic;
 
 namespace ActionSnoop
 {
