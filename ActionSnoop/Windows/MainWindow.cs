@@ -26,7 +26,11 @@ public class MainWindow : Window
 
         this.plugin = plugin;
         this.tabs = new List<MainWindowTab> {
-            new MainTab(this.plugin)
+            new MainTab(this.plugin),
+            new TankTab(this.plugin),
+            new HealerTab(this.plugin),
+            new PhysDPSTab(this.plugin),
+            new CasterDPSTab(this.plugin)
         };
     }
 

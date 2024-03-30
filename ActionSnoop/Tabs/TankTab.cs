@@ -16,21 +16,19 @@ using ImGuiNET;
 
 namespace ActionSnoop.Tabs;
 
-public class MainTab : MainWindowTab {
+public class TankTab : MainWindowTab
+{
     private string searchText = string.Empty;
-    private List<int> tanks = new List<int>() { 1, 3, 12, 17 };
-    private List<int> healers = new List<int>() { 6, 9, 13, 20 };
-    private List<int> physDPS = new List<int>() { 2, 4, 10, 14, 19, 5, 11, 18 };
-    private List<int> magicDPS = new List<int>() { 7, 8, 15 };
+    private List<uint> tanks = new List<uint>() { 1, 3, 12, 17 };
 
-    public MainTab(Plugin plugin) : base("Main", plugin) { }
+    public TankTab(Plugin plugin) : base("Tanks", plugin) { }
 
     public override void Draw()
     {
         //ImGui.BeginChild("##action_snoop_internal", ImGuiHelpers.ScaledVector2(-1f, -25f));
         //ImGui.SetNextWindowSizeConstraints(new Vector2(UIMinWidth, UIMinHeight), new Vector2(UIMaxWidth, UIMaxHeight));
         //List<PlayerCharacter> playerCharacters = actionSnoop.getDummyList();
-        List<PlayerCharacter> playerCharacters = this.Plugin.ActionSnoop.getPlayerCharacters();
+        List<PlayerCharacter> playerCharacters = this.Plugin.ActionSnoop.getPlayerCharacters().Where(x => tanks.Contains((uint)x.ClassJob.GameData?.JobIndex)).ToList();
 
         ImGuiTableFlags tableFlags = ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg;// | ImGuiTableFlags.SizingFixedFit;
         var iconSize = ImGui.GetTextLineHeight() * 2f;
