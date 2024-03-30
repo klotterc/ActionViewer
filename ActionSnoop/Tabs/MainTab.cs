@@ -4,6 +4,8 @@ using System.Linq;
 using System.Numerics;
 using ActionSnoop;
 using ActionSnoop.Enums;
+using ActionSnoop.Functions;
+using ActionSnoop.Models;
 using ActionSnoop.Windows;
 using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Statuses;
@@ -16,6 +18,10 @@ namespace ActionSnoop.Tabs;
 
 public class MainTab : MainWindowTab {
     private string searchText = string.Empty;
+    private List<int> tanks = new List<int>() { 1, 3, 12, 17 };
+    private List<int> healers = new List<int>() { 6, 9, 13, 20 };
+    private List<int> physDPS = new List<int>() { 2, 4, 10, 14, 19, 5, 11, 18 };
+    private List<int> magicDPS = new List<int>() { 7, 8, 15 };
 
     public MainTab(Plugin plugin) : base("Main", plugin) { }
 
@@ -34,8 +40,6 @@ public class MainTab : MainWindowTab {
         uint jobId;
         StatusList statusList;
         int essenceId;
-        int leftId = 0;
-        int rightId = 0;
 
         ImGui.SetNextItemWidth(-1 * ImGui.GetIO().FontGlobalScale);
         ImGui.InputText("", ref searchText, 256);
@@ -55,78 +59,34 @@ public class MainTab : MainWindowTab {
                 jobId = (uint)character.ClassJob.GameData?.JobIndex;
                 statusList = character.StatusList;
 
-                uint essenceIconId = 26;
-                uint leftIconId = 33;
-                uint rightIconId = 33;
-
-                List<int> essenceIds = new List<int>() { 2311, 2312, 2313, 2314, 2315, 2316, 2317, 2318, 2319, 2320, 2321, 2322, 2323, 2324, 2325, 2434, 2435, 2436, 2437, 2438, 2439, };
-
                 /* use status list to find:
                  * char essence ID (or -1)
                  * char reminiscence ID (or -1)
                  */
 
-                foreach (Status status in statusList)
-                {
-                    int statusId = (int)status.StatusId;
-                    if (essenceIds.Contains(statusId))
-                    {
-                        essenceId = statusId;
-
-                        if (essenceId >= 2311 && essenceId <= 2325)
-                        {
-                            essenceIconId = 62386 + (uint)essenceId;
-                        }
-                        if (essenceId >= 2434 && essenceId <= 2439)
-                        {
-                            essenceIconId = 62293 + (uint)essenceId;
-                        }
-                    }
-                    if (statusId.Equals(2348))
-                    {
-                        leftId = status.Param % 256;
-                        rightId = (status.Param - leftId) / 256;
-
-                        if (leftId == 71 || leftId == 72)
-                        {
-                            leftId += 6;
-                        }
-                        if (rightId == 71 || rightId == 72)
-                        {
-                            rightId += 6;
-                        }
-
-                        if (leftId > 0)
-                        {
-                            leftIconId = 64656 + (uint)leftId;
-                        }
-                        if (rightId > 0)
-                        {
-                            rightIconId = 64656 + (uint)rightId;
-                        }
-                    }
-                }
+                StatusInfo statusInfo = StatusInfoFunctions.GetStatusInfo(statusList);
 
                 if (searchText == string.Empty ||
-                    (leftIconId != 33 && ((BozjaActions)rightId).ToString().Replace("_", " ").ToLowerInvariant().IndexOf(searchText.ToLowerInvariant()) != -1) ||
-                    (leftIconId != 33 && ((BozjaActions)leftId).ToString().Replace("_", " ").ToLowerInvariant().IndexOf(searchText.ToLowerInvariant()) != -1))
+                    (statusInfo.rightIconID != 33 && ((BozjaActions)statusInfo.rightId).ToString().Replace("_", " ").ToLowerInvariant().IndexOf(searchText.ToLowerInvariant()) != -1) ||
+                    (statusInfo.leftIconID != 33 && ((BozjaActions)statusInfo.leftId).ToString().Replace("_", " ").ToLowerInvariant().IndexOf(searchText.ToLowerInvariant()) != -1))
                 {
 
                     // player job, name
                     ImGui.TableNextColumn();
-                    ImGui.Image(Plugin.TextureProvider.GetIcon(62400 + jobId)!.ImGuiHandle, iconSizeVec, Vector2.Zero, Vector2.One);
+                    //ImGui.Image(Plugin.TextureProvider.GetIcon(62400 + jobId)!.ImGuiHandle, iconSizeVec, Vector2.Zero, Vector2.One);
+                    ImGui.Text(jobId.ToString());
                     ImGui.TableNextColumn();
                     ImGui.Text(playerFirstLast[0] + "\n" + playerFirstLast[1]);
 
                     // essence
                     ImGui.TableNextColumn();
-                    ImGui.Image(Plugin.TextureProvider.GetIcon(essenceIconId)!.ImGuiHandle, iconSizeVec, Vector2.Zero, Vector2.One);
+                    ImGui.Image(Plugin.TextureProvider.GetIcon(statusInfo.essenceIconID)!.ImGuiHandle, iconSizeVec, Vector2.Zero, Vector2.One);
 
                     // left/right actions
                     ImGui.TableNextColumn();
-                    ImGui.Image(Plugin.TextureProvider.GetIcon(leftIconId)!.ImGuiHandle, iconSizeVec, Vector2.Zero, Vector2.One);
+                    ImGui.Image(Plugin.TextureProvider.GetIcon(statusInfo.leftIconID)!.ImGuiHandle, iconSizeVec, Vector2.Zero, Vector2.One);
                     ImGui.TableNextColumn();
-                    ImGui.Image(Plugin.TextureProvider.GetIcon(rightIconId)!.ImGuiHandle, iconSizeVec, Vector2.Zero, Vector2.One);
+                    ImGui.Image(Plugin.TextureProvider.GetIcon(statusInfo.rightIconID)!.ImGuiHandle, iconSizeVec, Vector2.Zero, Vector2.One);
                 }
             }
             ImGui.EndTable();
