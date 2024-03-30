@@ -42,7 +42,7 @@ namespace ActionSnoop.Functions
             return statusInfo;
         }
 
-        public static void GenerateStatusTable(List<PlayerCharacter> playerCharacters, string searchText)
+        public static void GenerateStatusTable(List<PlayerCharacter> playerCharacters, string searchText, string filter = "none")
         {
             ImGuiTableFlags tableFlags = ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg;// | ImGuiTableFlags.SizingFixedFit;
             var iconSize = ImGui.GetTextLineHeight() * 2f;
@@ -75,9 +75,12 @@ namespace ActionSnoop.Functions
 
                     StatusInfo statusInfo = StatusInfoFunctions.GetStatusInfo(statusList);
 
-                    if (searchText == string.Empty ||
-                        (statusInfo.rightIconID != 33 && ((BozjaActions)statusInfo.rightId).ToString().Replace("_", " ").ToLowerInvariant().IndexOf(searchText.ToLowerInvariant()) != -1) ||
-                        (statusInfo.leftIconID != 33 && ((BozjaActions)statusInfo.leftId).ToString().Replace("_", " ").ToLowerInvariant().IndexOf(searchText.ToLowerInvariant()) != -1))
+                    if ((searchText == string.Empty ||
+                            (statusInfo.rightIconID != 33 && ((BozjaActions)statusInfo.rightId).ToString().Replace("_", " ").ToLowerInvariant().IndexOf(searchText.ToLowerInvariant()) != -1) ||
+                            (statusInfo.leftIconID != 33 && ((BozjaActions)statusInfo.leftId).ToString().Replace("_", " ").ToLowerInvariant().IndexOf(searchText.ToLowerInvariant()) != -1)) && 
+                        (filter == "none" || (filter == "noEss" && 
+                            statusInfo.essenceIconID == 26))
+                        )
                     {
 
                         // player job, name

@@ -36,7 +36,8 @@ public class MainWindow : Window
             new HealerTab(this.plugin),
             new MeleeTab(this.plugin),
             new PhysRangedTab(this.plugin),
-            new CasterDPSTab(this.plugin)
+            new CasterDPSTab(this.plugin),
+            new NoEssenceTab(this.plugin)
         };
     }
 
