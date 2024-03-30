@@ -11,6 +11,13 @@ public class MainWindow : Window
 {
     private Plugin plugin;
     private List<MainWindowTab> tabs;
+    /*
+     * 920 - BSF
+     * 936 - DRN
+     * 937 - DRS
+     * 975 - Zadnor
+     */
+    private List<ushort> territoryTypes = new List<ushort>() { 920, 936, 937, 975 };
 
     public MainWindow(Plugin plugin) : base("ActionSnoop")
     {
@@ -39,18 +46,25 @@ public class MainWindow : Window
 
     public override void Draw()
     {
-        if (ImGui.BeginTabBar("##ActionSnoop_MainWindowTabs", ImGuiTabBarFlags.None))
+        if (territoryTypes.Contains(Services.ClientState.TerritoryType))
         {
-            foreach (var tab in tabs)
+            if (ImGui.BeginTabBar("##ActionSnoop_MainWindowTabs", ImGuiTabBarFlags.None))
             {
-                if (ImGui.BeginTabItem(tab.Name))
+                foreach (var tab in tabs)
                 {
-                    tab.Draw();
-                    ImGui.EndTabItem();
+                    if (ImGui.BeginTabItem(tab.Name))
+                    {
+                        tab.Draw();
+                        ImGui.EndTabItem();
+                    }
                 }
-            }
 
-            ImGui.EndTabBar();
+                ImGui.EndTabBar();
+            }
+        } 
+        else
+        {
+            ImGui.Text("Please Enter a Save the Queen Zone");
         }
     }
 }
