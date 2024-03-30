@@ -74,7 +74,7 @@ public class MainTab : MainWindowTab {
                     // player job, name
                     ImGui.TableNextColumn();
                     //ImGui.Image(Plugin.TextureProvider.GetIcon(62400 + jobId)!.ImGuiHandle, iconSizeVec, Vector2.Zero, Vector2.One);
-                    ImGui.Text(jobId.ToString());
+                    ImGui.Image(Plugin.TextureProvider.GetIcon(62400 + jobId)!.ImGuiHandle, iconSizeVec, Vector2.Zero, Vector2.One);
                     ImGui.TableNextColumn();
                     ImGui.Text(playerFirstLast[0] + "\n" + playerFirstLast[1]);
 
