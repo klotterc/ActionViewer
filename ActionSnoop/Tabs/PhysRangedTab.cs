@@ -7,16 +7,16 @@ using System.Linq;
 
 namespace ActionSnoop.Tabs;
 
-public class CasterDPSTab : MainWindowTab
+public class PhysRangedTab : MainWindowTab
 {
     private string searchText = string.Empty;
-    private List<uint> casterDPS = new List<uint>() { 7, 8, 15 };
+    private List<uint> physRanged = new List<uint>() { 5, 11, 18 };
 
-    public CasterDPSTab(Plugin plugin) : base("Caster", plugin) { }
+    public PhysRangedTab(Plugin plugin) : base("Phys Ranged", plugin) { }
 
     public override void Draw()
     {
-        List<PlayerCharacter> playerCharacters = this.Plugin.ActionSnoop.getPlayerCharacters().Where(x => casterDPS.Contains((uint)x.ClassJob.GameData?.JobIndex)).ToList();
+        List<PlayerCharacter> playerCharacters = this.Plugin.ActionSnoop.getPlayerCharacters().Where(x => physRanged.Contains((uint)x.ClassJob.GameData?.JobIndex)).ToList();
 
         ImGui.SetNextItemWidth(-1 * ImGui.GetIO().FontGlobalScale);
         ImGui.InputText("", ref searchText, 256);

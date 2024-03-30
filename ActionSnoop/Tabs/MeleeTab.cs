@@ -7,12 +7,12 @@ using System.Linq;
 
 namespace ActionSnoop.Tabs;
 
-public class PhysDPSTab : MainWindowTab
+public class MeleeTab : MainWindowTab
 {
     private string searchText = string.Empty;
-    private List<uint> physDPS = new List<uint>() { 2, 4, 10, 14, 19, 5, 11, 18 };
+    private List<uint> physDPS = new List<uint>() { 2, 4, 10, 14, 19 };
 
-    public PhysDPSTab(Plugin plugin) : base("Phys DPS", plugin) { }
+    public MeleeTab(Plugin plugin) : base("Melee", plugin) { }
 
     public override void Draw()
     {
