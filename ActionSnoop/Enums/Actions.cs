@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ActionSnoop
+namespace ActionSnoop.Enums
 {
     using System.Runtime.Serialization;
 

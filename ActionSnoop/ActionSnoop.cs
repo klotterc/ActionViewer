@@ -26,7 +26,7 @@ namespace ActionSnoop
             {
                 PlayerCharacter? playerCharacter = gameObject as PlayerCharacter;
 
-                if (playerCharacter == null )//|| playerCharacter == Services.ClientState.LocalPlayer)
+                if (playerCharacter == null)//|| playerCharacter == Services.ClientState.LocalPlayer)
                 {
                     continue;
                 }
@@ -48,7 +48,7 @@ namespace ActionSnoop
                 {
                     continue;
                 }
-                for(int i = 0; i < 16; i++)
+                for (int i = 0; i < 16; i++)
                 {
                     playerCharactersMatchingRole.Add((gameObject as PlayerCharacter)!);
                 }
