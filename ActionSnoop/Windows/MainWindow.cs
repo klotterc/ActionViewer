@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
-using ActionSnoop.Windows;
-using ActionSnoop;
 using Dalamud.Interface;
 using Dalamud.Interface.Internal.Windows.Settings;
 using Dalamud.Interface.Utility;
@@ -9,7 +7,7 @@ using Dalamud.Interface.Windowing;
 using ImGuiNET;
 using ActionSnoop.Tabs;
 
-namespace ReSanctuary.Windows;
+namespace ActionSnoop.Windows;
 
 public class MainWindow : Window
 {
