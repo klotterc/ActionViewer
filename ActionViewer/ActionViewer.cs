@@ -1,5 +1,6 @@
 ﻿using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Objects.Types;
+using Dalamud.Utility;
 using System.Collections.Generic;
 
 namespace ActionViewer
@@ -19,7 +20,7 @@ namespace ActionViewer
             {
                 PlayerCharacter? playerCharacter = gameObject as PlayerCharacter;
 
-                if (playerCharacter == null)//|| playerCharacter == Services.ClientState.LocalPlayer)
+                if (playerCharacter == null || playerCharacter.ClassJob.Id == 0)//|| playerCharacter == Services.ClientState.LocalPlayer)
                 {
                     continue;
                 }

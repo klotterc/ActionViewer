@@ -92,8 +92,22 @@ namespace ActionViewer.Functions
 
                         // player job, name
                         ImGui.TableNextColumn();
-                        //ImGui.Image(Plugin.TextureProvider.GetIcon(62400 + jobId)!.ImGuiHandle, iconSizeVec, Vector2.Zero, Vector2.One);
-                        ImGui.Image(Plugin.TextureProvider.GetIcon(62400 + row.jobId)!.ImGuiHandle, iconSizeVec, Vector2.Zero, Vector2.One);
+
+                        uint jobIconId = 62118;
+                        if(row.jobId >= 10)
+                        {
+                            jobIconId += 2 + row.jobId;
+                        }
+                        else if(row.jobId >= 8)
+                        {
+                            jobIconId += 1 + row.jobId;
+                        }
+                        else
+                        {
+                            jobIconId += row.jobId;
+                        }
+
+                        ImGui.Image(Plugin.TextureProvider.GetIcon(jobIconId)!.ImGuiHandle, iconSizeVec, Vector2.Zero, Vector2.One);
                         ImGui.TableNextColumn();
                         ImGui.Selectable(row.playerName, false);
                         var hover = ImGui.IsItemHovered(ImGuiHoveredFlags.AllowWhenDisabled);
@@ -128,6 +142,31 @@ namespace ActionViewer.Functions
 
         public static List<CharRow> SortCharDataWithSortSpecs(ImGuiTableSortSpecsPtr sortSpecs, List<CharRow> charDataList)
         {
+
+            Dictionary<uint, uint> jobSort = new Dictionary<uint, uint>()
+            {
+                {1, 1 }, // PLD
+                {3, 2 }, // WAR
+                {12, 3}, // DRK
+                {17, 4 }, // GNB
+                {6 , 5 }, // WHM
+                {9 , 6 }, // SCH
+                {13, 7}, // AST
+                {20 , 8 }, // SGE
+                {2, 9 }, // MNK
+                {4 , 10 }, // DRG
+                {10 , 11 }, // NIN
+                {14 , 12 }, // SAM
+                {19 , 13 }, // RPR
+                {5 , 14 }, // BRD
+                {11 , 15 }, // MCH
+                {18 , 16 }, // DNC
+                {7 , 17 }, // BLM
+                {8 , 18 }, // SMN
+                {15 , 19 }, // RDM
+
+            };
+
             IEnumerable<CharRow> sortedCharaData = charDataList;
 
             for (int i = 0; i < sortSpecs.SpecsCount; i++)
@@ -139,11 +178,11 @@ namespace ActionViewer.Functions
                     case charColumns.Job:
                         if (columnSortSpec.SortDirection == ImGuiSortDirection.Ascending)
                         {
-                            sortedCharaData = sortedCharaData.OrderBy(o => o.jobId);
+                            sortedCharaData = sortedCharaData.OrderBy(o => jobSort.GetValueOrDefault(o.jobId));
                         }
                         else
                         {
-                            sortedCharaData = sortedCharaData.OrderByDescending(o => o.jobId);
+                            sortedCharaData = sortedCharaData.OrderByDescending(o => jobSort.GetValueOrDefault(o.jobId));
                         }
                         break;
                     case charColumns.Name:
