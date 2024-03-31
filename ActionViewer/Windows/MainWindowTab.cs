@@ -1,4 +1,4 @@
-﻿namespace ActionSnoop.Windows;
+﻿namespace ActionViewer.Windows;
 
 // Modified from https://github.com/NotNite/ReSanctuary/blob/main/ReSanctuary/Windows/MainWindowTab.cs
 public abstract class MainWindowTab

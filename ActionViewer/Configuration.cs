@@ -2,7 +2,7 @@
 using Dalamud.Plugin;
 using System;
 
-namespace ActionSnoop
+namespace ActionViewer
 {
     [Serializable]
     public class Configuration : IPluginConfiguration

@@ -1,5 +1,14 @@
-﻿namespace ActionSnoop.Models
+﻿using Dalamud.Game.ClientState.Objects.SubKinds;
+
+namespace ActionViewer.Models
 {
+    public class CharRow
+    {
+        public PlayerCharacter character { get; set; }
+        public uint jobId { get; set; }
+        public string playerName { get; set; }
+        public StatusInfo statusInfo { get; set; }
+    }
     public class StatusInfo
     {
         public int essenceId { get; set; }

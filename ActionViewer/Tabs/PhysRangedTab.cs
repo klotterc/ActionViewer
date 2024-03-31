@@ -1,11 +1,11 @@
-﻿using ActionSnoop.Functions;
-using ActionSnoop.Windows;
+﻿using ActionViewer.Functions;
+using ActionViewer.Windows;
 using Dalamud.Game.ClientState.Objects.SubKinds;
 using ImGuiNET;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ActionSnoop.Tabs;
+namespace ActionViewer.Tabs;
 
 public class PhysRangedTab : MainWindowTab
 {
@@ -16,7 +16,7 @@ public class PhysRangedTab : MainWindowTab
 
     public override void Draw()
     {
-        List<PlayerCharacter> playerCharacters = this.Plugin.ActionSnoop.getPlayerCharacters().Where(x => physRanged.Contains((uint)x.ClassJob.GameData?.JobIndex)).ToList();
+        List<PlayerCharacter> playerCharacters = this.Plugin.ActionViewer.getPlayerCharacters().Where(x => physRanged.Contains((uint)x.ClassJob.GameData?.JobIndex)).ToList();
 
         ImGui.SetNextItemWidth(-1 * ImGui.GetIO().FontGlobalScale);
         ImGui.InputText("", ref searchText, 256);

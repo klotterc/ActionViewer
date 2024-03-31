@@ -1,4 +1,4 @@
-﻿using ActionSnoop.Windows;
+﻿using ActionViewer.Windows;
 using Dalamud.Game.ClientState.Objects;
 using Dalamud.Game.Command;
 using Dalamud.Interface.Windowing;
@@ -6,23 +6,23 @@ using Dalamud.IoC;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
 
-namespace ActionSnoop
+namespace ActionViewer
 {
     public sealed class Plugin : IDalamudPlugin
     {
-        public string Name => "ActionSnoop";
+        public string Name => "ActionViewer";
 
-        private const string commandName = "/snoop";
+        private const string commandName = "/av";
         
         [PluginService] public static ITargetManager TargetManager { get; private set; } = null!;
 
         [PluginService] public static DalamudPluginInterface PluginInterface { get; private set; } = null!;
         [PluginService] public static ITextureProvider TextureProvider { get; private set; } = null!;
 
-        public readonly WindowSystem WindowSystem = new("ActionSnoop");
+        public readonly WindowSystem WindowSystem = new("ActionViewer");
         public readonly MainWindow MainWindow;
         private Configuration Configuration { get; init; }
-        public IActionSnoop ActionSnoop { get; init; }
+        public IActionViewer ActionViewer { get; init; }
 
         public Plugin(DalamudPluginInterface pluginInterface)
         {
@@ -37,14 +37,14 @@ namespace ActionSnoop
             PluginInterface.UiBuilder.Draw += this.DrawUI;
             PluginInterface.UiBuilder.OpenConfigUi += this.DrawConfigUI;
 
-            ActionSnoop = new ActionSnoop();
+            ActionViewer = new ActionViewer();
 
             // you might normally want to embed resources and load them from the manifest stream
-            //PluginUi = new PluginUI(Configuration, ActionSnoop);
+            //PluginUi = new PluginUI(Configuration, ActionViewer);
 
             Services.Commands.AddHandler(commandName, new CommandInfo(OnCommand)
             {
-                HelpMessage = "Bring up list of nearby player essence and lost actions"
+                HelpMessage = "View a list of the Essence and Lost Actions of nearby players"
             });
 
             Services.PluginInterface.UiBuilder.Draw += DrawUI;

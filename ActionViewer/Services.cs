@@ -2,7 +2,7 @@
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
 
-namespace ActionSnoop
+namespace ActionViewer
 {
     public sealed class Services
     {

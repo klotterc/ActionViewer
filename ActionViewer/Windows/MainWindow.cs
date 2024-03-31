@@ -1,11 +1,11 @@
-﻿using ActionSnoop.Tabs;
+﻿using ActionViewer.Tabs;
 using Dalamud.Interface.Utility;
 using Dalamud.Interface.Windowing;
 using ImGuiNET;
 using System.Collections.Generic;
 using System.Numerics;
 
-namespace ActionSnoop.Windows;
+namespace ActionViewer.Windows;
 
 public class MainWindow : Window
 {
@@ -19,7 +19,7 @@ public class MainWindow : Window
      */
     private List<ushort> territoryTypes = new List<ushort>() { 920, 936, 937, 975 };
 
-    public MainWindow(Plugin plugin) : base("ActionSnoop")
+    public MainWindow(Plugin plugin) : base("ActionViewer")
     {
         SizeConstraints = new WindowSizeConstraints
         {
@@ -50,7 +50,7 @@ public class MainWindow : Window
     {
         if (territoryTypes.Contains(Services.ClientState.TerritoryType))
         {
-            if (ImGui.BeginTabBar("##ActionSnoop_MainWindowTabs", ImGuiTabBarFlags.None))
+            if (ImGui.BeginTabBar("##ActionViewer_MainWindowTabs", ImGuiTabBarFlags.None))
             {
                 foreach (var tab in tabs)
                 {
