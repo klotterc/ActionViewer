@@ -14,8 +14,8 @@
       "stq"
     ],
     "IconUrl": "https://raw.githubusercontent.com/boco-bot/ActionViewer/main/ActionViewer/images/icon.png",
-    "DownloadLinkInstall": "https://github.com/boco-bot/ActionViewer/releases/download/v0.1.2.0/Release.zip",
-    "DownloadLinkTesting": "https://github.com/boco-bot/ActionViewer/releases/download/v0.1.2.0/Release.zip",
-    "DownloadLinkUpdate": "https://github.com/boco-bot/ActionViewer/releases/download/v0.1.2.0/Release.zip"
+    "DownloadLinkInstall": "https://github.com/boco-bot/ActionViewer/releases/download/v0.1.2.0/latest.zip",
+    "DownloadLinkTesting": "https://github.com/boco-bot/ActionViewer/releases/download/v0.1.2.0/latest.zip",
+    "DownloadLinkUpdate": "https://github.com/boco-bot/ActionViewer/releases/download/v0.1.2.0/latest.zip"
   }
 ]
