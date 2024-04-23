@@ -64,18 +64,22 @@ namespace ActionViewer.Functions
             return charRowList;
         }
 
-        public static void GenerateStatusTable(List<PlayerCharacter> playerCharacters, string searchText, string filter = "none")
+        public static void GenerateStatusTable(List<PlayerCharacter> playerCharacters, string searchText, bool anonymousMode, string filter = "none")
         {
             ImGuiTableFlags tableFlags = ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg | ImGuiTableFlags.Sortable;// | ImGuiTableFlags.SizingFixedFit;
             var iconSize = ImGui.GetTextLineHeight() * 2f;
             var iconSizeVec = new Vector2(iconSize, iconSize);
 
+
             List<CharRow> charRowList = GenerateRows(playerCharacters);
 
-            if (ImGui.BeginTable("table1", 6, tableFlags))
+            if (ImGui.BeginTable("table1", anonymousMode ? 5 : 6, tableFlags))
             {
                 ImGui.TableSetupColumn("Job", ImGuiTableColumnFlags.WidthFixed, 34f, (int)charColumns.Job);
-                ImGui.TableSetupColumn("Name", ImGuiTableColumnFlags.WidthStretch | ImGuiTableColumnFlags.PreferSortDescending, 1f, (int)charColumns.Name);
+                if(!anonymousMode)
+                {
+                    ImGui.TableSetupColumn("Name", ImGuiTableColumnFlags.WidthStretch | ImGuiTableColumnFlags.PreferSortDescending, 1f, (int)charColumns.Name);
+                }
                 ImGui.TableSetupColumn("RR", ImGuiTableColumnFlags.WidthFixed, 28f, (int)charColumns.Reraiser);
                 ImGui.TableSetupColumn("Ess.", ImGuiTableColumnFlags.WidthFixed, 34f, (int)charColumns.Essence);
                 ImGui.TableSetupColumn("Left", ImGuiTableColumnFlags.WidthFixed, 34f, (int)charColumns.Left);
@@ -113,13 +117,22 @@ namespace ActionViewer.Functions
                         }
 
                         ImGui.Image(Plugin.TextureProvider.GetIcon(jobIconId)!.ImGuiHandle, iconSizeVec, Vector2.Zero, Vector2.One);
-                        ImGui.TableNextColumn();
-                        ImGui.Selectable(row.playerName, false);
                         var hover = ImGui.IsItemHovered(ImGuiHoveredFlags.AllowWhenDisabled);
                         var left = hover && ImGui.IsMouseClicked(ImGuiMouseButton.Left);
                         if (left)
                         {
                             Plugin.TargetManager.Target = row.character;
+                        }
+                        if (!anonymousMode)
+                        {
+                            ImGui.TableNextColumn();
+                            ImGui.Selectable(row.playerName, false);
+                            hover = ImGui.IsItemHovered(ImGuiHoveredFlags.AllowWhenDisabled);
+                            left = hover && ImGui.IsMouseClicked(ImGuiMouseButton.Left);
+                            if (left)
+                            {
+                                Plugin.TargetManager.Target = row.character;
+                            }
                         }
 
                         // reraiser
