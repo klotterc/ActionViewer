@@ -41,6 +41,10 @@ namespace ActionViewer.Functions
                         statusInfo.rightId += 6;
                     }
                 }
+                if (statusId.Equals(2355))
+                {
+                    statusInfo.reraiserStatus = status.Param == 70 ? 1 : 2;
+                }
             }
             return statusInfo;
         }
@@ -68,10 +72,11 @@ namespace ActionViewer.Functions
 
             List<CharRow> charRowList = GenerateRows(playerCharacters);
 
-            if (ImGui.BeginTable("table1", 5, tableFlags))
+            if (ImGui.BeginTable("table1", 6, tableFlags))
             {
                 ImGui.TableSetupColumn("Job", ImGuiTableColumnFlags.WidthFixed, 34f, (int)charColumns.Job);
                 ImGui.TableSetupColumn("Name", ImGuiTableColumnFlags.WidthStretch | ImGuiTableColumnFlags.PreferSortDescending, 1f, (int)charColumns.Name);
+                ImGui.TableSetupColumn("RR", ImGuiTableColumnFlags.WidthFixed, 28f, (int)charColumns.Reraiser);
                 ImGui.TableSetupColumn("Ess.", ImGuiTableColumnFlags.WidthFixed, 34f, (int)charColumns.Essence);
                 ImGui.TableSetupColumn("Left", ImGuiTableColumnFlags.WidthFixed, 34f, (int)charColumns.Left);
                 ImGui.TableSetupColumn("Right", ImGuiTableColumnFlags.WidthFixed, 34f, (int)charColumns.Right);
@@ -117,6 +122,10 @@ namespace ActionViewer.Functions
                             Plugin.TargetManager.Target = row.character;
                         }
 
+                        // reraiser
+                        ImGui.TableNextColumn();
+                        ImGui.Image(Plugin.TextureProvider.GetIcon(row.statusInfo.reraiserIconID)!.ImGuiHandle, new Vector2(iconSize * (float)0.8, iconSize));
+
                         // essence
                         ImGui.TableNextColumn();
                         ImGui.Image(Plugin.TextureProvider.GetIcon(row.statusInfo.essenceIconID)!.ImGuiHandle, iconSizeVec, Vector2.Zero, Vector2.One);
@@ -135,6 +144,7 @@ namespace ActionViewer.Functions
         {
             Job,
             Name,
+            Reraiser,
             Essence,
             Left,
             Right
@@ -203,6 +213,16 @@ namespace ActionViewer.Functions
                         else
                         {
                             sortedCharaData = sortedCharaData.OrderByDescending(o => o.statusInfo.essenceIconID);
+                        }
+                        break;
+                    case charColumns.Reraiser:
+                        if (columnSortSpec.SortDirection == ImGuiSortDirection.Ascending)
+                        {
+                            sortedCharaData = sortedCharaData.OrderBy(o => o.statusInfo.reraiserStatus);
+                        }
+                        else
+                        {
+                            sortedCharaData = sortedCharaData.OrderByDescending(o => o.statusInfo.reraiserStatus);
                         }
                         break;
                     case charColumns.Left:
