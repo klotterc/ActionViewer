@@ -27,7 +27,7 @@ namespace ActionViewer
         public readonly ConfigWindow ConfigWindow;
         public Configuration Configuration { get; init; }
         public IActionViewer ActionViewer { get; init; }
-        public const string Authors = "bobo-bot, ClassicRagu";
+        public const string Authors = "boco-bot, ClassicRagu";
         public static readonly string Version = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "Unknown";
 
         public Plugin(DalamudPluginInterface pluginInterface)
