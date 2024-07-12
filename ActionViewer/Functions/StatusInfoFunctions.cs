@@ -1,9 +1,8 @@
 ﻿using ActionViewer.Enums;
 using ActionViewer.Models;
 using Dalamud.Game.ClientState.Objects.SubKinds;
-using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Statuses;
-using FFXIVClientStructs.FFXIV.Client.Game.Character;
+using Dalamud.Interface.Textures;
 using ImGuiNET;
 using System;
 using System.Collections.Generic;
@@ -48,10 +47,10 @@ namespace ActionViewer.Functions
             }
             return statusInfo;
         }
-        private static List<CharRow> GenerateRows(List<PlayerCharacter> playerCharacters)
+        private static List<CharRow> GenerateRows(List<IPlayerCharacter> playerCharacters)
         {
             List<CharRow> charRowList = new List<CharRow>();
-            foreach (PlayerCharacter character in playerCharacters)
+            foreach (IPlayerCharacter character in playerCharacters)
             {
                 // get player name, job ID, status list
                 CharRow row = new CharRow();
@@ -64,7 +63,7 @@ namespace ActionViewer.Functions
             return charRowList;
         }
 
-        public static void GenerateStatusTable(List<PlayerCharacter> playerCharacters, string searchText, bool anonymousMode, string filter = "none")
+        public static void GenerateStatusTable(List<IPlayerCharacter> playerCharacters, string searchText, bool anonymousMode, string filter = "none")
         {
             ImGuiTableFlags tableFlags = ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg | ImGuiTableFlags.Sortable;// | ImGuiTableFlags.SizingFixedFit;
             var iconSize = ImGui.GetTextLineHeight() * 2f;
@@ -116,7 +115,9 @@ namespace ActionViewer.Functions
                             jobIconId += row.jobId;
                         }
 
-                        ImGui.Image(Plugin.TextureProvider.GetIcon(jobIconId)!.ImGuiHandle, iconSizeVec, Vector2.Zero, Vector2.One);
+                        ImGui.Image(
+							Plugin.TextureProvider.GetFromGameIcon(new GameIconLookup(jobIconId)).GetWrapOrEmpty().ImGuiHandle,
+                            iconSizeVec, Vector2.Zero, Vector2.One);
                         var hover = ImGui.IsItemHovered(ImGuiHoveredFlags.AllowWhenDisabled);
                         var left = hover && ImGui.IsMouseClicked(ImGuiMouseButton.Left);
                         if (left)
@@ -137,17 +138,25 @@ namespace ActionViewer.Functions
 
                         // reraiser
                         ImGui.TableNextColumn();
-                        ImGui.Image(Plugin.TextureProvider.GetIcon(row.statusInfo.reraiserIconID)!.ImGuiHandle, new Vector2(iconSize * (float)0.8, iconSize));
+                        ImGui.Image(
+							Plugin.TextureProvider.GetFromGameIcon(new GameIconLookup(row.statusInfo.reraiserIconID)).GetWrapOrEmpty().ImGuiHandle,
+                            new Vector2(iconSize * (float)0.8, iconSize));
 
                         // essence
                         ImGui.TableNextColumn();
-                        ImGui.Image(Plugin.TextureProvider.GetIcon(row.statusInfo.essenceIconID)!.ImGuiHandle, iconSizeVec, Vector2.Zero, Vector2.One);
+                        ImGui.Image(
+							Plugin.TextureProvider.GetFromGameIcon(new GameIconLookup(row.statusInfo.essenceIconID)).GetWrapOrEmpty().ImGuiHandle, 
+                            iconSizeVec, Vector2.Zero, Vector2.One);
 
                         // left/right actions
                         ImGui.TableNextColumn();
-                        ImGui.Image(Plugin.TextureProvider.GetIcon(row.statusInfo.leftIconID)!.ImGuiHandle, iconSizeVec, Vector2.Zero, Vector2.One);
+                        ImGui.Image(
+							Plugin.TextureProvider.GetFromGameIcon(new GameIconLookup(row.statusInfo.leftIconID)).GetWrapOrEmpty().ImGuiHandle,
+                            iconSizeVec, Vector2.Zero, Vector2.One);
                         ImGui.TableNextColumn();
-                        ImGui.Image(Plugin.TextureProvider.GetIcon(row.statusInfo.rightIconID)!.ImGuiHandle, iconSizeVec, Vector2.Zero, Vector2.One);
+                        ImGui.Image(
+                            Plugin.TextureProvider.GetFromGameIcon(new GameIconLookup(row.statusInfo.rightIconID)).GetWrapOrEmpty().ImGuiHandle, 
+                            iconSizeVec, Vector2.Zero, Vector2.One);
                     }
                 }
                 ImGui.EndTable();

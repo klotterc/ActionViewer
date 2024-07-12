@@ -15,7 +15,7 @@ public class NoEssenceTab : MainWindowTab
 
     public override void Draw()
     {
-        List<PlayerCharacter> playerCharacters = this.Plugin.ActionViewer.getPlayerCharacters();
+        List<IPlayerCharacter> playerCharacters = this.Plugin.ActionViewer.getPlayerCharacters();
 
         ImGui.SetNextItemWidth(-1 * ImGui.GetIO().FontGlobalScale);
         ImGui.InputText("", ref searchText, 256);

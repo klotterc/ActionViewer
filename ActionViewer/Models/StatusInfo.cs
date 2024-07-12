@@ -4,7 +4,7 @@ namespace ActionViewer.Models
 {
     public class CharRow
     {
-        public PlayerCharacter character { get; set; }
+        public IPlayerCharacter character { get; set; }
         public uint jobId { get; set; }
         public string playerName { get; set; }
         public StatusInfo statusInfo { get; set; }

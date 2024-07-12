@@ -19,7 +19,7 @@ namespace ActionViewer
         
         [PluginService] public static ITargetManager TargetManager { get; private set; } = null!;
 
-        [PluginService] public static DalamudPluginInterface PluginInterface { get; private set; } = null!;
+        [PluginService] public static IDalamudPluginInterface PluginInterface { get; private set; } = null!;
         [PluginService] public static ITextureProvider TextureProvider { get; private set; } = null!;
 
         public readonly WindowSystem WindowSystem = new("ActionViewer");
@@ -30,7 +30,7 @@ namespace ActionViewer
         public const string Authors = "boco-bot, ClassicRagu";
         public static readonly string Version = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "Unknown";
 
-        public Plugin(DalamudPluginInterface pluginInterface)
+        public Plugin(IDalamudPluginInterface pluginInterface)
         {
             Services.Initialize(pluginInterface);
 

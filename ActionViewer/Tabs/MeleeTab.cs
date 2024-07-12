@@ -16,7 +16,7 @@ public class MeleeTab : MainWindowTab
 
     public override void Draw()
     {
-        List<PlayerCharacter> playerCharacters = this.Plugin.ActionViewer.getPlayerCharacters().Where(x => physDPS.Contains((uint)x.ClassJob.GameData?.JobIndex)).ToList();
+        List<IPlayerCharacter> playerCharacters = this.Plugin.ActionViewer.getPlayerCharacters().Where(x => physDPS.Contains((uint)x.ClassJob.GameData?.JobIndex)).ToList();
 
         ImGui.SetNextItemWidth(-1 * ImGui.GetIO().FontGlobalScale);
         ImGui.InputText("", ref searchText, 256);

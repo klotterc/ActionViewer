@@ -7,25 +7,25 @@ namespace ActionViewer
 {
     public interface IActionViewer
     {
-        List<PlayerCharacter> getPlayerCharacters();
+        List<IPlayerCharacter> getPlayerCharacters();
     }
 
     public sealed unsafe class ActionViewer : IActionViewer
     {
-        public List<PlayerCharacter> getPlayerCharacters()
+        public List<IPlayerCharacter> getPlayerCharacters()
         {
-            var playerCharacters = new List<PlayerCharacter>();
+            var playerCharacters = new List<IPlayerCharacter>();
 
-            foreach (GameObject gameObject in Services.Objects)
+            foreach (IGameObject gameObject in Services.Objects)
             {
-                PlayerCharacter? playerCharacter = gameObject as PlayerCharacter;
+				IPlayerCharacter? playerCharacter = gameObject as IPlayerCharacter;
 
                 if (playerCharacter == null || playerCharacter.ClassJob.Id == 0)//|| playerCharacter == Services.ClientState.LocalPlayer)
                 {
                     continue;
                 }
 
-                playerCharacters.Add((gameObject as PlayerCharacter)!);
+                playerCharacters.Add((gameObject as IPlayerCharacter)!);
             }
 
             return playerCharacters;
