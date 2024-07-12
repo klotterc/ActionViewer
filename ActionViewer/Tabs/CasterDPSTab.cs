@@ -10,7 +10,7 @@ namespace ActionViewer.Tabs;
 public class CasterDPSTab : MainWindowTab
 {
     private string searchText = string.Empty;
-    private List<uint> casterDPS = new List<uint>() { 7, 8, 15 };
+    private List<uint> casterDPS = new List<uint>() { 7, 8, 15, 22 };
 
     public CasterDPSTab(Plugin plugin) : base("Caster", plugin) { }
 
