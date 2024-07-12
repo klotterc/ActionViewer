@@ -15,6 +15,7 @@ namespace ActionViewer.Models
         public int reraiserStatus { get; set; }
         public int leftId { get; set; }
         public int rightId { get; set; }
+        public int reminiscenceId { get; set; }
         public uint essenceIconID
         {
             get
@@ -37,8 +38,11 @@ namespace ActionViewer.Models
             {
                 if (rightId > 0)
                 {
-                    return 64656 + (uint)rightId;
-                }
+					if (reminiscenceId == 2348)
+						return 64656 + (uint)rightId;
+                    if (reminiscenceId == 1618)
+                        return 64600 + (uint)rightId;
+				}
                 return 33;
             }
         }
@@ -48,8 +52,11 @@ namespace ActionViewer.Models
             {
                 if (leftId > 0)
                 {
-                    return 64656 + (uint)leftId;
-                }
+					if (reminiscenceId == 2348)
+						return 64656 + (uint)leftId;
+					if (reminiscenceId == 1618)
+						return 64600 + (uint)leftId;
+				}
                 return 33;
             }
         }

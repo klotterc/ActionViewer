@@ -14,7 +14,8 @@ namespace ActionViewer.Functions
 {
     public static class StatusInfoFunctions
     {
-        private static List<int> essenceIds = new List<int>() { 2311, 2312, 2313, 2314, 2315, 2316, 2317, 2318, 2319, 2320, 2321, 2322, 2323, 2324, 2325, 2434, 2435, 2436, 2437, 2438, 2439, };
+		private static List<ushort> eurekaTerritories = new List<ushort>() { 795, 827 };
+		private static List<int> essenceIds = new List<int>() { 2311, 2312, 2313, 2314, 2315, 2316, 2317, 2318, 2319, 2320, 2321, 2322, 2323, 2324, 2325, 2434, 2435, 2436, 2437, 2438, 2439, };
         private static StatusInfo GetStatusInfo(StatusList statusList)
         {
             StatusInfo statusInfo = new StatusInfo();
@@ -28,6 +29,7 @@ namespace ActionViewer.Functions
                 }
                 if (statusId.Equals(2348))
                 {
+                    statusInfo.reminiscenceId = 2348;
                     statusInfo.leftId = status.Param % 256;
                     statusInfo.rightId = (status.Param - statusInfo.leftId) / 256;
 
@@ -40,10 +42,20 @@ namespace ActionViewer.Functions
                         statusInfo.rightId += 6;
                     }
                 }
-                if (statusId.Equals(2355))
+				if (statusId.Equals(1618))
+				{
+					statusInfo.reminiscenceId = 1618;
+					statusInfo.leftId = status.Param % 256;
+					statusInfo.rightId = (status.Param - statusInfo.leftId) / 256;
+				}
+				if (statusId.Equals(2355))
                 {
                     statusInfo.reraiserStatus = status.Param == 70 ? 1 : 2;
                 }
+                if (statusId.Equals(1641))
+                {
+					statusInfo.reraiserStatus = 1;
+				}
             }
             return statusInfo;
         }
@@ -68,19 +80,27 @@ namespace ActionViewer.Functions
             ImGuiTableFlags tableFlags = ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg | ImGuiTableFlags.Sortable;// | ImGuiTableFlags.SizingFixedFit;
             var iconSize = ImGui.GetTextLineHeight() * 2f;
             var iconSizeVec = new Vector2(iconSize, iconSize);
+            bool eurekaTerritory = eurekaTerritories.Contains(Services.ClientState.TerritoryType);
+            int columnCount = eurekaTerritory ? 5 : 6;
 
 
-            List<CharRow> charRowList = GenerateRows(playerCharacters);
+			List<CharRow> charRowList = GenerateRows(playerCharacters);
 
-            if (ImGui.BeginTable("table1", anonymousMode ? 5 : 6, tableFlags))
+            if (ImGui.BeginTable("table1", anonymousMode ? columnCount - 1 : columnCount, tableFlags))
             {
                 ImGui.TableSetupColumn("Job", ImGuiTableColumnFlags.WidthFixed, 34f, (int)charColumns.Job);
                 if(!anonymousMode)
                 {
                     ImGui.TableSetupColumn("Name", ImGuiTableColumnFlags.WidthStretch | ImGuiTableColumnFlags.PreferSortDescending, 1f, (int)charColumns.Name);
                 }
-                ImGui.TableSetupColumn("RR", ImGuiTableColumnFlags.WidthFixed, 28f, (int)charColumns.Reraiser);
-                ImGui.TableSetupColumn("Ess.", ImGuiTableColumnFlags.WidthFixed, 34f, (int)charColumns.Essence);
+                if (!eurekaTerritory)
+                {
+					ImGui.TableSetupColumn("RR", ImGuiTableColumnFlags.WidthFixed, 28f, (int)charColumns.Reraiser);
+					ImGui.TableSetupColumn("Ess.", ImGuiTableColumnFlags.WidthFixed, 34f, (int)charColumns.Essence);
+				} else
+                {
+					ImGui.TableSetupColumn("Remembered", ImGuiTableColumnFlags.WidthFixed, 28f, (int)charColumns.Reraiser);
+				}
                 ImGui.TableSetupColumn("Left", ImGuiTableColumnFlags.WidthFixed, 34f, (int)charColumns.Left);
                 ImGui.TableSetupColumn("Right", ImGuiTableColumnFlags.WidthFixed, 34f, (int)charColumns.Right);
                 ImGui.TableHeadersRow();
@@ -136,17 +156,20 @@ namespace ActionViewer.Functions
                             }
                         }
 
-                        // reraiser
-                        ImGui.TableNextColumn();
-                        ImGui.Image(
+						// reraiser
+						ImGui.TableNextColumn();
+						ImGui.Image(
 							Plugin.TextureProvider.GetFromGameIcon(new GameIconLookup(row.statusInfo.reraiserIconID)).GetWrapOrEmpty().ImGuiHandle,
-                            new Vector2(iconSize * (float)0.8, iconSize));
+							new Vector2(iconSize * (float)0.8, iconSize));
 
-                        // essence
-                        ImGui.TableNextColumn();
-                        ImGui.Image(
-							Plugin.TextureProvider.GetFromGameIcon(new GameIconLookup(row.statusInfo.essenceIconID)).GetWrapOrEmpty().ImGuiHandle, 
-                            iconSizeVec, Vector2.Zero, Vector2.One);
+						if (!eurekaTerritory)
+                        {
+                            // essence
+                            ImGui.TableNextColumn();
+                            ImGui.Image(
+                                Plugin.TextureProvider.GetFromGameIcon(new GameIconLookup(row.statusInfo.essenceIconID)).GetWrapOrEmpty().ImGuiHandle,
+                                iconSizeVec, Vector2.Zero, Vector2.One);
+                        }
 
                         // left/right actions
                         ImGui.TableNextColumn();
