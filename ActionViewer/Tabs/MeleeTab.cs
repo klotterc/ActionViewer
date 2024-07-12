@@ -10,7 +10,7 @@ namespace ActionViewer.Tabs;
 public class MeleeTab : MainWindowTab
 {
     private string searchText = string.Empty;
-    private List<uint> physDPS = new List<uint>() { 2, 4, 10, 14, 19 };
+    private List<uint> physDPS = new List<uint>() { 2, 4, 10, 14, 19, 21 };
 
     public MeleeTab(Plugin plugin) : base("Melee", plugin) { }
 
