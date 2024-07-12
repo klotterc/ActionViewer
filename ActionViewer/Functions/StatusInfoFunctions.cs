@@ -112,7 +112,9 @@ namespace ActionViewer.Functions
 
                     if ((searchText == string.Empty ||
                             (row.statusInfo.rightIconID != 33 && ((BozjaActions)row.statusInfo.rightId).ToString().Replace("_", " ").ToLowerInvariant().IndexOf(searchText.ToLowerInvariant()) != -1) ||
-                            (row.statusInfo.leftIconID != 33 && ((BozjaActions)row.statusInfo.leftId).ToString().Replace("_", " ").ToLowerInvariant().IndexOf(searchText.ToLowerInvariant()) != -1)) && 
+                            (row.statusInfo.leftIconID != 33 && ((BozjaActions)row.statusInfo.leftId).ToString().Replace("_", " ").ToLowerInvariant().IndexOf(searchText.ToLowerInvariant()) != -1) ||
+							(row.statusInfo.rightIconID != 33 && ((EurekaActions)row.statusInfo.rightId).ToString().Replace("_", " ").ToLowerInvariant().IndexOf(searchText.ToLowerInvariant()) != -1) ||
+							(row.statusInfo.leftIconID != 33 && ((EurekaActions)row.statusInfo.leftId).ToString().Replace("_", " ").ToLowerInvariant().IndexOf(searchText.ToLowerInvariant()) != -1)) && 
                         (filter == "none" || (filter == "noEss" && 
                             row.statusInfo.essenceIconID == 26))
                         )

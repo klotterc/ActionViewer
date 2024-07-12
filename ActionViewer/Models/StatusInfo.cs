@@ -1,4 +1,5 @@
-﻿using Dalamud.Game.ClientState.Objects.SubKinds;
+﻿using ActionViewer.Enums;
+using Dalamud.Game.ClientState.Objects.SubKinds;
 
 namespace ActionViewer.Models
 {
@@ -41,7 +42,7 @@ namespace ActionViewer.Models
 					if (reminiscenceId == 2348)
 						return 64656 + (uint)rightId;
                     if (reminiscenceId == 1618)
-                        return 64600 + (uint)rightId;
+						return EurkeaIconDictionary.eurekaIcons[rightId];
 				}
                 return 33;
             }
@@ -55,7 +56,7 @@ namespace ActionViewer.Models
 					if (reminiscenceId == 2348)
 						return 64656 + (uint)leftId;
 					if (reminiscenceId == 1618)
-						return 64600 + (uint)leftId;
+						return EurkeaIconDictionary.eurekaIcons[leftId];
 				}
                 return 33;
             }
