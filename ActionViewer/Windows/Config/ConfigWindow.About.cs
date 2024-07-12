@@ -23,7 +23,8 @@ public partial class ConfigWindow
 
                 ImGui.TextUnformatted("Version:");
                 ImGui.SameLine();
-                ImGui.TextColored(ImGuiColors.ParsedOrange, Plugin.Version);
+                // Hardcoded temporarily for API 10 changes
+                ImGui.TextColored(ImGuiColors.ParsedOrange, "0.2.0.0");
             }
             ImGui.EndChild();
 
