@@ -1,10 +1,12 @@
 ﻿using ActionViewer.Windows;
+using ActionViewer.Windows.Config;
 using Dalamud.Game.ClientState.Objects;
 using Dalamud.Game.Command;
 using Dalamud.Interface.Windowing;
 using Dalamud.IoC;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
+using System.Reflection;
 
 namespace ActionViewer
 {
@@ -13,18 +15,22 @@ namespace ActionViewer
         public string Name => "ActionViewer";
 
         private const string commandName = "/av";
+        private const string configCommandName = "/avcfg";
         
         [PluginService] public static ITargetManager TargetManager { get; private set; } = null!;
 
-        [PluginService] public static DalamudPluginInterface PluginInterface { get; private set; } = null!;
+        [PluginService] public static IDalamudPluginInterface PluginInterface { get; private set; } = null!;
         [PluginService] public static ITextureProvider TextureProvider { get; private set; } = null!;
 
         public readonly WindowSystem WindowSystem = new("ActionViewer");
         public readonly MainWindow MainWindow;
-        private Configuration Configuration { get; init; }
+        public readonly ConfigWindow ConfigWindow;
+        public Configuration Configuration { get; init; }
         public IActionViewer ActionViewer { get; init; }
+        public const string Authors = "boco-bot, ClassicRagu";
+        public static readonly string Version = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "Unknown";
 
-        public Plugin(DalamudPluginInterface pluginInterface)
+        public Plugin(IDalamudPluginInterface pluginInterface)
         {
             Services.Initialize(pluginInterface);
 
@@ -32,7 +38,10 @@ namespace ActionViewer
             Configuration.Initialize(Services.PluginInterface);
 
             this.MainWindow = new MainWindow(this);
+            this.ConfigWindow = new ConfigWindow(this);
+
             this.WindowSystem.AddWindow(this.MainWindow);
+            this.WindowSystem.AddWindow(this.ConfigWindow);
 
             PluginInterface.UiBuilder.Draw += this.DrawUI;
             PluginInterface.UiBuilder.OpenConfigUi += this.DrawConfigUI;
@@ -46,8 +55,12 @@ namespace ActionViewer
             {
                 HelpMessage = "View a list of the Essence and Lost Actions of nearby players"
             });
+            Services.Commands.AddHandler(configCommandName, new CommandInfo(OnConfigCommand)
+            {
+                HelpMessage = "Open the config for Action Viewer"
+            });
 
-            Services.PluginInterface.UiBuilder.Draw += DrawUI;
+            //Services.PluginInterface.UiBuilder.Draw += DrawUI;
             //Services.PluginInterface.UiBuilder.OpenConfigUi += DrawConfigUI;
         }
 
@@ -62,6 +75,11 @@ namespace ActionViewer
             this.MainWindow.IsOpen ^= true;
         }
 
+        private void OnConfigCommand(string command, string args)
+        {
+            this.ConfigWindow.IsOpen ^= true;
+        }
+
         private void DrawUI()
         {
             WindowSystem.Draw();
@@ -69,7 +87,7 @@ namespace ActionViewer
 
         public void DrawConfigUI()
         {
-            this.MainWindow.IsOpen = true;
+            this.ConfigWindow.IsOpen = true;
         }
 
         //private void DrawConfigUI()

@@ -9,12 +9,14 @@ namespace ActionViewer
     {
         public int Version { get; set; } = 0;
 
+        public bool AnonymousMode = false;
+
         // the below exist just to make saving less cumbersome
 
         [NonSerialized]
-        private DalamudPluginInterface? pluginInterface;
+        private IDalamudPluginInterface? pluginInterface;
 
-        public void Initialize(DalamudPluginInterface pluginInterface)
+        public void Initialize(IDalamudPluginInterface pluginInterface)
         {
             this.pluginInterface = pluginInterface;
         }

@@ -16,10 +16,10 @@ public class CasterDPSTab : MainWindowTab
 
     public override void Draw()
     {
-        List<PlayerCharacter> playerCharacters = this.Plugin.ActionViewer.getPlayerCharacters().Where(x => casterDPS.Contains((uint)x.ClassJob.GameData?.JobIndex)).ToList();
+        List<IPlayerCharacter> playerCharacters = this.Plugin.ActionViewer.getPlayerCharacters().Where(x => casterDPS.Contains((uint)x.ClassJob.GameData?.JobIndex)).ToList();
 
         ImGui.SetNextItemWidth(-1 * ImGui.GetIO().FontGlobalScale);
         ImGui.InputText("", ref searchText, 256);
-        StatusInfoFunctions.GenerateStatusTable(playerCharacters, searchText);
+        StatusInfoFunctions.GenerateStatusTable(playerCharacters, searchText, this.Plugin.Configuration.AnonymousMode);
     }
 }

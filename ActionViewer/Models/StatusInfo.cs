@@ -4,7 +4,7 @@ namespace ActionViewer.Models
 {
     public class CharRow
     {
-        public PlayerCharacter character { get; set; }
+        public IPlayerCharacter character { get; set; }
         public uint jobId { get; set; }
         public string playerName { get; set; }
         public StatusInfo statusInfo { get; set; }
@@ -12,6 +12,7 @@ namespace ActionViewer.Models
     public class StatusInfo
     {
         public int essenceId { get; set; }
+        public int reraiserStatus { get; set; }
         public int leftId { get; set; }
         public int rightId { get; set; }
         public uint essenceIconID
@@ -50,6 +51,21 @@ namespace ActionViewer.Models
                     return 64656 + (uint)leftId;
                 }
                 return 33;
+            }
+        }
+        public uint reraiserIconID
+        {
+            get
+            {
+                switch(reraiserStatus)
+                {
+                    case 1:
+                        return 19301;
+                    case 2:
+                        return 19302;
+                    default:
+                        return 19321;
+                }
             }
         }
     }
