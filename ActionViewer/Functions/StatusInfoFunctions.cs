@@ -3,6 +3,7 @@ using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Statuses;
 using Dalamud.Interface.Textures;
 using ImGuiNET;
+using Lumina.Excel;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace ActionViewer.Functions
     {
 		private static List<ushort> eurekaTerritories = new List<ushort>() { 795, 827 };
 		private static List<int> essenceIds = new List<int>() { 2311, 2312, 2313, 2314, 2315, 2316, 2317, 2318, 2319, 2320, 2321, 2322, 2323, 2324, 2325, 2434, 2435, 2436, 2437, 2438, 2439, };
-		private static StatusInfo GetStatusInfo(StatusList statusList)
+		private static StatusInfo GetStatusInfo(StatusList statusList, ExcelSheet<Lumina.Excel.GeneratedSheets2.Action> actionSheet)
         {
             StatusInfo statusInfo = new StatusInfo();
 
@@ -34,10 +35,10 @@ namespace ActionViewer.Functions
                     int rightStartingRow = rightId < 71 ? 20700 : rightId > 83 ? 23823 : 22273;
 
 					if (leftId > 0)
-						statusInfo.leftLuminaStatusInfo = Plugin.DataManager.GetExcelSheet<Lumina.Excel.GeneratedSheets2.Action>().GetRow((uint)(leftStartingRow + leftId));
+						statusInfo.leftLuminaStatusInfo = actionSheet.GetRow((uint)(leftStartingRow + leftId));
 
 					if (rightId > 0)
-						statusInfo.rightLuminaStatusInfo = Plugin.DataManager.GetExcelSheet<Lumina.Excel.GeneratedSheets2.Action>().GetRow((uint)(rightStartingRow + rightId));
+						statusInfo.rightLuminaStatusInfo = actionSheet.GetRow((uint)(rightStartingRow + rightId));
 				}
 				if (statusId.Equals(1618))
 				{
@@ -45,10 +46,10 @@ namespace ActionViewer.Functions
 					int rightId = (status.Param - leftId) / 256;
 
                     if (leftId > 0)
-                        statusInfo.leftLuminaStatusInfo = Plugin.DataManager.GetExcelSheet<Lumina.Excel.GeneratedSheets2.Action>().GetRow((uint)(12957 + leftId));
+                        statusInfo.leftLuminaStatusInfo = actionSheet.GetRow((uint)(12957 + leftId));
 					
                     if(rightId > 0)
-					    statusInfo.rightLuminaStatusInfo = Plugin.DataManager.GetExcelSheet<Lumina.Excel.GeneratedSheets2.Action>().GetRow((uint)(12957 + rightId));
+					    statusInfo.rightLuminaStatusInfo = actionSheet.GetRow((uint)(12957 + rightId));
 				}
 				if (statusId.Equals(2355))
                 {
@@ -61,7 +62,7 @@ namespace ActionViewer.Functions
             }
             return statusInfo;
         }
-        private static List<CharRow> GenerateRows(List<IPlayerCharacter> playerCharacters)
+        private static List<CharRow> GenerateRows(List<IPlayerCharacter> playerCharacters, ExcelSheet<Lumina.Excel.GeneratedSheets2.Action> actionSheet)
         {
             List<CharRow> charRowList = new List<CharRow>();
             foreach (IPlayerCharacter character in playerCharacters)
@@ -71,13 +72,13 @@ namespace ActionViewer.Functions
                 row.character = character;
                 row.playerName = character.Name.ToString();
                 row.jobId = (uint)character.ClassJob.GameData?.JobIndex;
-                row.statusInfo = GetStatusInfo(character.StatusList);
+                row.statusInfo = GetStatusInfo(character.StatusList, actionSheet);
                 charRowList.Add(row);
             }
             return charRowList;
         }
 
-        public static void GenerateStatusTable(List<IPlayerCharacter> playerCharacters, string searchText, bool anonymousMode, string filter = "none")
+        public static void GenerateStatusTable(List<IPlayerCharacter> playerCharacters, string searchText, bool anonymousMode, ExcelSheet<Lumina.Excel.GeneratedSheets2.Action> actionSheet, string filter = "none")
         {
             ImGuiTableFlags tableFlags = ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg | ImGuiTableFlags.Sortable;// | ImGuiTableFlags.SizingFixedFit;
             var iconSize = ImGui.GetTextLineHeight() * 2f;
@@ -86,7 +87,7 @@ namespace ActionViewer.Functions
             int columnCount = eurekaTerritory ? 5 : 6;
 
 
-			List<CharRow> charRowList = GenerateRows(playerCharacters);
+			List<CharRow> charRowList = GenerateRows(playerCharacters, actionSheet);
 
             if (ImGui.BeginTable("table1", anonymousMode ? columnCount - 1 : columnCount, tableFlags))
             {

@@ -6,6 +6,7 @@ using Dalamud.Interface.Windowing;
 using Dalamud.IoC;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
+using Lumina.Excel;
 using System.Reflection;
 
 namespace ActionViewer
@@ -30,8 +31,9 @@ namespace ActionViewer
         public IActionViewer ActionViewer { get; init; }
         public const string Authors = "boco-bot, ClassicRagu";
         public static readonly string Version = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "Unknown";
+		public readonly ExcelSheet<Lumina.Excel.GeneratedSheets2.Action> ActionSheet;
 
-        public Plugin(IDalamudPluginInterface pluginInterface)
+		public Plugin(IDalamudPluginInterface pluginInterface)
         {
             Services.Initialize(pluginInterface);
 
@@ -47,7 +49,9 @@ namespace ActionViewer
             PluginInterface.UiBuilder.Draw += this.DrawUI;
             PluginInterface.UiBuilder.OpenConfigUi += this.DrawConfigUI;
 
-            ActionViewer = new ActionViewer();
+            this.ActionSheet = DataManager.GetExcelSheet<Lumina.Excel.GeneratedSheets2.Action>();
+
+			ActionViewer = new ActionViewer();
 
             // you might normally want to embed resources and load them from the manifest stream
             //PluginUi = new PluginUI(Configuration, ActionViewer);
