@@ -16,11 +16,12 @@ namespace ActionViewer
 
         private const string commandName = "/av";
         private const string configCommandName = "/avcfg";
-        
+
         [PluginService] public static ITargetManager TargetManager { get; private set; } = null!;
 
         [PluginService] public static IDalamudPluginInterface PluginInterface { get; private set; } = null!;
         [PluginService] public static ITextureProvider TextureProvider { get; private set; } = null!;
+        [PluginService] public static IDataManager DataManager { get; private set; } = null;
 
         public readonly WindowSystem WindowSystem = new("ActionViewer");
         public readonly MainWindow MainWindow;
@@ -40,7 +41,7 @@ namespace ActionViewer
             this.MainWindow = new MainWindow(this);
             this.ConfigWindow = new ConfigWindow(this);
 
-            this.WindowSystem.AddWindow(this.MainWindow);
+			this.WindowSystem.AddWindow(this.MainWindow);
             this.WindowSystem.AddWindow(this.ConfigWindow);
 
             PluginInterface.UiBuilder.Draw += this.DrawUI;
