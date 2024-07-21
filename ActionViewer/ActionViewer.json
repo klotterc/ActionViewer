@@ -1,8 +1,8 @@
 {
   "Author": "boco-bot",
   "Name": "Action Viewer",
-  "Punchline": "View STQ-related info of nearby players",
-  "Description": "Use /av to view STQ-related info of nearby players",
+  "Punchline": "View Forays-related info of nearby players",
+  "Description": "Use /av to view Forays-related info of nearby players",
   "InternalName": "actionViewer",
   "ApplicableVersion": "any",
   "Tags": [
