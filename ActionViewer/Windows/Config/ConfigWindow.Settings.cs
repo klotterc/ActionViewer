@@ -18,8 +18,9 @@ public partial class ConfigWindow
             var width = ImGui.GetWindowWidth();
             ImGui.SetNextItemWidth(width / 2f);
             changed |= ImGui.Checkbox("Anonymous Mode", ref Plugin.Configuration.AnonymousMode);
+			changed |= ImGui.Checkbox("Tooltips", ref Plugin.Configuration.Tooltips);
 
-            if (changed)
+			if (changed)
                 Plugin.Configuration.Save();
 
             ImGui.EndTabItem();

@@ -13,19 +13,27 @@ namespace ActionViewer.Models
     {
         public Lumina.Excel.GeneratedSheets2.Action? leftLuminaStatusInfo { get; set; }
         public Lumina.Excel.GeneratedSheets2.Action? rightLuminaStatusInfo { get; set; }
+        public Lumina.Excel.GeneratedSheets2.Item? itemLuminaInfo { get; set; }
 		public int essenceId { get; set; }
         public int reraiserStatus { get; set; }
+        public string essenceName
+        {
+            get
+            {
+                if(itemLuminaInfo != null)
+                {
+                    return itemLuminaInfo.Name;
+                }
+                return null;
+            }
+        }
         public uint essenceIconID
         {
             get
             {
-                if (essenceId >= 2311 && essenceId <= 2325)
+                if (itemLuminaInfo != null)
                 {
-                    return 62386 + (uint)essenceId;
-                }
-                if (essenceId >= 2434 && essenceId <= 2439)
-                {
-                    return 62293 + (uint)essenceId;
+                    return itemLuminaInfo.Icon;
                 }
                 return 26;
             }
