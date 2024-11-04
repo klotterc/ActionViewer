@@ -46,10 +46,14 @@ namespace ActionViewer.Functions
 					int leftId = status.Param % 256;
 					int rightId = (status.Param - leftId) / 256;
 
-					if (leftId > 0)
+					if (leftId > 50)
+						statusInfo.leftLuminaStatusInfo = actionSheet.GetRow((uint)(14476 + leftId - 51));
+					else if (leftId > 0)
 						statusInfo.leftLuminaStatusInfo = actionSheet.GetRow((uint)(12957 + leftId));
 
-					if (rightId > 0)
+					if (rightId > 50)
+						statusInfo.rightLuminaStatusInfo = actionSheet.GetRow((uint)(14476 + rightId - 51));
+					else if (rightId > 0)
 						statusInfo.rightLuminaStatusInfo = actionSheet.GetRow((uint)(12957 + rightId));
 				}
 				if (statusId.Equals(2355))
