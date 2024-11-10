@@ -9,7 +9,7 @@ namespace ActionViewer
     {
         public int Version { get; set; } = 0;
 
-		public bool Tooltips = false;
+		public bool Tooltips = true;
 		public bool AnonymousMode = false;
         public bool TargetRangeLimit = true;
 
