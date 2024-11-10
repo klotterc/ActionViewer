@@ -1,5 +1,6 @@
 ﻿using ActionViewer.Models;
 using Dalamud.Game.ClientState.Objects.SubKinds;
+using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Statuses;
 using Dalamud.Interface.Textures;
 using ImGuiNET;
@@ -13,6 +14,11 @@ namespace ActionViewer.Functions
 {
 	public static class StatusInfoFunctions
 	{
+		public static bool IsInRange(IGameObject? target)
+		{
+			return target != null && target.YalmDistanceX < 50;
+		}
+
 		private static List<ushort> eurekaTerritories = new List<ushort>() { 795, 827 };
 		private static List<int> essenceIds = new List<int>() { 2311, 2312, 2313, 2314, 2315, 2316, 2317, 2318, 2319, 2320, 2321, 2322, 2323, 2324, 2325, 2434, 2435, 2436, 2437, 2438, 2439, };
 		private static StatusInfo GetStatusInfo(StatusList statusList, ExcelSheet<Lumina.Excel.GeneratedSheets2.Action> actionSheet, ExcelSheet<Lumina.Excel.GeneratedSheets2.Item> itemSheet)
@@ -68,23 +74,26 @@ namespace ActionViewer.Functions
 			return statusInfo;
 		}
 
-		private static List<CharRow> GenerateRows(List<IPlayerCharacter> playerCharacters, ExcelSheet<Lumina.Excel.GeneratedSheets2.Action> actionSheet, ExcelSheet<Lumina.Excel.GeneratedSheets2.Item> itemSheet)
+		private static List<CharRow> GenerateRows(List<IPlayerCharacter> playerCharacters, ExcelSheet<Lumina.Excel.GeneratedSheets2.Action> actionSheet, ExcelSheet<Lumina.Excel.GeneratedSheets2.Item> itemSheet, bool targetRangeLimit)
 		{
 			List<CharRow> charRowList = new List<CharRow>();
 			foreach (IPlayerCharacter character in playerCharacters)
 			{
-				// get player name, job ID, status list
-				CharRow row = new CharRow();
-				row.character = character;
-				row.playerName = character.Name.ToString();
-				row.jobId = (uint)character.ClassJob.GameData?.JobIndex;
-				row.statusInfo = GetStatusInfo(character.StatusList, actionSheet, itemSheet);
-				charRowList.Add(row);
+				if (!targetRangeLimit || IsInRange(character))
+				{
+					// get player name, job ID, status list
+					CharRow row = new CharRow();
+					row.character = character;
+					row.playerName = character.Name.ToString();
+					row.jobId = (uint)character.ClassJob.GameData?.JobIndex;
+					row.statusInfo = GetStatusInfo(character.StatusList, actionSheet, itemSheet);
+					charRowList.Add(row);
+				}
 			}
 			return charRowList;
 		}
 
-		public static void GenerateStatusTable(List<IPlayerCharacter> playerCharacters, string searchText, bool anonymousMode, bool enableTooltips, ExcelSheet<Lumina.Excel.GeneratedSheets2.Action> actionSheet, ExcelSheet<Lumina.Excel.GeneratedSheets2.Item> itemSheet, string filter = "none")
+		public static void GenerateStatusTable(List<IPlayerCharacter> playerCharacters, string searchText, bool anonymousMode, bool enableTooltips, bool targetRangeLimit, ExcelSheet<Lumina.Excel.GeneratedSheets2.Action> actionSheet, ExcelSheet<Lumina.Excel.GeneratedSheets2.Item> itemSheet, string filter = "none")
 		{
 			ImGuiTableFlags tableFlags = ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg | ImGuiTableFlags.Sortable;// | ImGuiTableFlags.SizingFixedFit;
 			var iconSize = ImGui.GetTextLineHeight() * 2f;
@@ -93,7 +102,7 @@ namespace ActionViewer.Functions
 			int columnCount = eurekaTerritory ? 5 : 6;
 
 
-			List<CharRow> charRowList = GenerateRows(playerCharacters, actionSheet, itemSheet);
+			List<CharRow> charRowList = GenerateRows(playerCharacters, actionSheet, itemSheet, targetRangeLimit);
 
 			if (ImGui.BeginTable("table1", anonymousMode ? columnCount - 1 : columnCount, tableFlags))
 			{
@@ -190,7 +199,7 @@ namespace ActionViewer.Functions
 						ImGui.Image(
 							Plugin.TextureProvider.GetFromGameIcon(new GameIconLookup(row.statusInfo.leftIconID)).GetWrapOrEmpty().ImGuiHandle,
 							iconSizeVec, Vector2.Zero, Vector2.One);
-						if (enableTooltips &&ImGui.IsItemHovered(ImGuiHoveredFlags.AllowWhenDisabled) && row.statusInfo.leftLuminaStatusInfo != null)
+						if (enableTooltips && ImGui.IsItemHovered(ImGuiHoveredFlags.AllowWhenDisabled) && row.statusInfo.leftLuminaStatusInfo != null)
 						{
 							ImGui.SetTooltip(row.statusInfo.leftLuminaStatusInfo.Name);
 
@@ -237,13 +246,14 @@ namespace ActionViewer.Functions
                 {10 , 11 }, // NIN
                 {14 , 12 }, // SAM
                 {19 , 13 }, // RPR
-                {5 , 14 }, // BRD
+				{21, 20 }, // VPR
+				{5 , 14 }, // BRD
                 {11 , 15 }, // MCH
                 {18 , 16 }, // DNC
                 {7 , 17 }, // BLM
                 {8 , 18 }, // SMN
                 {15 , 19 }, // RDM
-
+				{22, 21 } // PCT
             };
 
 			IEnumerable<CharRow> sortedCharaData = charDataList;

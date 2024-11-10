@@ -19,6 +19,6 @@ public class NoEssenceTab : MainWindowTab
 
         ImGui.SetNextItemWidth(-1 * ImGui.GetIO().FontGlobalScale);
         ImGui.InputText("", ref searchText, 256);
-        StatusInfoFunctions.GenerateStatusTable(playerCharacters, searchText, this.Plugin.Configuration.AnonymousMode, this.Plugin.Configuration.Tooltips, this.Plugin.ActionSheet, this.Plugin.ItemSheet, "noEss");
+        StatusInfoFunctions.GenerateStatusTable(playerCharacters, searchText, this.Plugin.Configuration.AnonymousMode, this.Plugin.Configuration.Tooltips, this.Plugin.Configuration.TargetRangeLimit, this.Plugin.ActionSheet, this.Plugin.ItemSheet, "noEss");
     }
 }
