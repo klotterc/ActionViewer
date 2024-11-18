@@ -19,6 +19,7 @@ public partial class ConfigWindow
             ImGui.SetNextItemWidth(width / 2f);
             changed |= ImGui.Checkbox("Anonymous Mode", ref Plugin.Configuration.AnonymousMode);
 			changed |= ImGui.Checkbox("Tooltips", ref Plugin.Configuration.Tooltips);
+			changed |= ImGui.Checkbox("Target Range Limit", ref Plugin.Configuration.TargetRangeLimit);
 
 			if (changed)
                 Plugin.Configuration.Save();

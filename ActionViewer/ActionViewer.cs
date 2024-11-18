@@ -20,7 +20,7 @@ namespace ActionViewer
             {
 				IPlayerCharacter? playerCharacter = gameObject as IPlayerCharacter;
 
-                if (playerCharacter == null || playerCharacter.ClassJob.Id == 0)//|| playerCharacter == Services.ClientState.LocalPlayer)
+                if (playerCharacter == null || playerCharacter.ClassJob.Value.RowId == 0)//|| playerCharacter == Services.ClientState.LocalPlayer)
                 {
                     continue;
                 }

@@ -16,10 +16,10 @@ public class MeleeTab : MainWindowTab
 
     public override void Draw()
     {
-        List<IPlayerCharacter> playerCharacters = this.Plugin.ActionViewer.getPlayerCharacters().Where(x => physDPS.Contains((uint)x.ClassJob.GameData?.JobIndex)).ToList();
+        List<IPlayerCharacter> playerCharacters = this.Plugin.ActionViewer.getPlayerCharacters().Where(x => physDPS.Contains((uint)x.ClassJob.Value.JobIndex)).ToList();
 
         ImGui.SetNextItemWidth(-1 * ImGui.GetIO().FontGlobalScale);
         ImGui.InputText("", ref searchText, 256);
-        StatusInfoFunctions.GenerateStatusTable(playerCharacters, searchText, this.Plugin.Configuration.AnonymousMode, this.Plugin.Configuration.Tooltips, this.Plugin.ActionSheet, this.Plugin.ItemSheet);
+        StatusInfoFunctions.GenerateStatusTable(playerCharacters, searchText, this.Plugin.Configuration.AnonymousMode, this.Plugin.Configuration.Tooltips, this.Plugin.Configuration.TargetRangeLimit, this.Plugin.ActionSheet, this.Plugin.ItemSheet);
     }
 }
