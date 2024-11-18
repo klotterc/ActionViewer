@@ -14,8 +14,8 @@
       "stq"
     ],
     "IconUrl": "https://raw.githubusercontent.com/klotterc/ActionViewer/main/ActionViewer/images/icon.png",
-    "DownloadLinkInstall": "https://github.com/klotterc/ActionViewer/releases/download/v0.2.3.1/latest.zip",
-    "DownloadLinkTesting": "https://github.com/klotterc/ActionViewer/releases/download/v0.2.3.1/latest.zip",
-    "DownloadLinkUpdate": "https://github.com/klotterc/ActionViewer/releases/download/v0.2.3.1/latest.zip"
+    "DownloadLinkInstall": "https://github.com/klotterc/ActionViewer/releases/download/v0.3.0.0/latest.zip",
+    "DownloadLinkTesting": "https://github.com/klotterc/ActionViewer/releases/download/v0.3.0.0/latest.zip",
+    "DownloadLinkUpdate": "https://github.com/klotterc/ActionViewer/releases/download/v0.3.0.0/latest.zip"
   }
 ]
