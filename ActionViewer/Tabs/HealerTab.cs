@@ -16,7 +16,7 @@ public class HealerTab : MainWindowTab
 
     public override void Draw()
     {
-        List<IPlayerCharacter> playerCharacters = this.Plugin.ActionViewer.getPlayerCharacters().Where(x => healers.Contains((uint)x.ClassJob.GameData?.JobIndex)).ToList();
+        List<IPlayerCharacter> playerCharacters = this.Plugin.ActionViewer.getPlayerCharacters().Where(x => healers.Contains((uint)x.ClassJob.Value.JobIndex)).ToList();
 
         ImGui.SetNextItemWidth(-1 * ImGui.GetIO().FontGlobalScale);
         ImGui.InputText("", ref searchText, 256);

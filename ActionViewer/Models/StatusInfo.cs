@@ -11,9 +11,9 @@ namespace ActionViewer.Models
     }
     public class StatusInfo
     {
-        public Lumina.Excel.GeneratedSheets2.Action? leftLuminaStatusInfo { get; set; }
-        public Lumina.Excel.GeneratedSheets2.Action? rightLuminaStatusInfo { get; set; }
-        public Lumina.Excel.GeneratedSheets2.Item? itemLuminaInfo { get; set; }
+        public Lumina.Excel.Sheets.Action? leftLuminaStatusInfo { get; set; }
+        public Lumina.Excel.Sheets.Action? rightLuminaStatusInfo { get; set; }
+        public Lumina.Excel.Sheets.Item? itemLuminaInfo { get; set; }
 		public int essenceId { get; set; }
         public int reraiserStatus { get; set; }
         public string essenceName
@@ -22,7 +22,7 @@ namespace ActionViewer.Models
             {
                 if(itemLuminaInfo != null)
                 {
-                    return itemLuminaInfo.Name;
+                    return itemLuminaInfo.Value.Name.ExtractText();
                 }
                 return null;
             }
@@ -33,7 +33,7 @@ namespace ActionViewer.Models
             {
                 if (itemLuminaInfo != null)
                 {
-                    return itemLuminaInfo.Icon;
+                    return itemLuminaInfo.Value.Icon;
                 }
                 return 26;
             }
@@ -45,7 +45,7 @@ namespace ActionViewer.Models
             {
                 if (rightLuminaStatusInfo != null)
                 {
-				    return rightLuminaStatusInfo.Icon;
+				    return rightLuminaStatusInfo.Value.Icon;
 				}
                 return 33;
             }
@@ -56,7 +56,7 @@ namespace ActionViewer.Models
             {
                 if (leftLuminaStatusInfo != null)
                 {
-                    return leftLuminaStatusInfo.Icon;
+                    return leftLuminaStatusInfo.Value.Icon;
 				}
                 return 33;
             }
@@ -68,11 +68,11 @@ namespace ActionViewer.Models
                 switch(reraiserStatus)
                 {
                     case 1:
-                        return 19301;
+                        return 219301;
                     case 2:
-                        return 19302;
+                        return 219302;
                     default:
-                        return 19321;
+                        return 219321;
                 }
             }
         }

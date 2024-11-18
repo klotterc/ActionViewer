@@ -31,8 +31,8 @@ namespace ActionViewer
         public IActionViewer ActionViewer { get; init; }
         public const string Authors = "boco-bot, ClassicRagu";
         public static readonly string Version = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "Unknown";
-		public readonly ExcelSheet<Lumina.Excel.GeneratedSheets2.Action> ActionSheet;
-		public readonly ExcelSheet<Lumina.Excel.GeneratedSheets2.Item> ItemSheet;
+		public readonly ExcelSheet<Lumina.Excel.Sheets.Action> ActionSheet;
+		public readonly ExcelSheet<Lumina.Excel.Sheets.Item> ItemSheet;
 
 		public Plugin(IDalamudPluginInterface pluginInterface)
         {
@@ -50,8 +50,8 @@ namespace ActionViewer
             PluginInterface.UiBuilder.Draw += this.DrawUI;
             PluginInterface.UiBuilder.OpenConfigUi += this.DrawConfigUI;
 
-            this.ActionSheet = DataManager.GetExcelSheet<Lumina.Excel.GeneratedSheets2.Action>();
-			this.ItemSheet = DataManager.GetExcelSheet<Lumina.Excel.GeneratedSheets2.Item>();
+            this.ActionSheet = DataManager.GetExcelSheet<Lumina.Excel.Sheets.Action>();
+			this.ItemSheet = DataManager.GetExcelSheet<Lumina.Excel.Sheets.Item>();
 
 			ActionViewer = new ActionViewer();
 
