@@ -17,7 +17,7 @@ public class GeneratedTab : MainWindowTab
 	{
 		get
 		{
-			if (TabType == "Main" || JobList == null)
+			if (JobList == null)
 			{
 				return this.Plugin.ActionViewer.getPlayerCharacters();
 			}
