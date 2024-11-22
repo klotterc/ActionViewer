@@ -35,7 +35,6 @@ public class GeneratedTab : MainWindowTab
 
 	public override void Draw()
 	{
-
 		ImGui.SetNextItemWidth(-1 * ImGui.GetIO().FontGlobalScale);
 		ImGui.InputText("", ref searchText, 256);
 		StatusInfoFunctions.GenerateStatusTable(PlayerCharacters, searchText, this.Plugin.Configuration, this.Plugin.ActionSheet, this.Plugin.ItemSheet, TabType == "No Ess." ? "noEss" : "none");

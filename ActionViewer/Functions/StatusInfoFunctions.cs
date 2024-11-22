@@ -20,6 +20,7 @@ namespace ActionViewer.Functions
 		}
 
 		private static List<ushort> eurekaTerritories = new List<ushort>() { 795, 827 };
+		private static List<ushort> delubrumTerritories = new List<ushort>() { 936, 937 };
 		private static List<int> essenceIds = new List<int>() { 2311, 2312, 2313, 2314, 2315, 2316, 2317, 2318, 2319, 2320, 2321, 2322, 2323, 2324, 2325, 2434, 2435, 2436, 2437, 2438, 2439, };
 		private static StatusInfo GetStatusInfo(StatusList statusList, ExcelSheet<Lumina.Excel.Sheets.Action> actionSheet, ExcelSheet<Lumina.Excel.Sheets.Item> itemSheet)
 		{
@@ -30,6 +31,7 @@ namespace ActionViewer.Functions
 				int statusId = (int)status.StatusId;
 				if (essenceIds.Contains(statusId))
 				{
+					statusInfo.essenceId = statusId;
 					uint essence = (uint)(statusId > 2325 ? 32168 + statusId - 2434 : 30940 + statusId - 2311);
 					statusInfo.itemLuminaInfo = itemSheet.GetRow(essence);
 				}
@@ -100,6 +102,7 @@ namespace ActionViewer.Functions
 			var iconSizeVec = new Vector2(iconSize, iconSize);
 			bool eurekaTerritory = eurekaTerritories.Contains(Services.ClientState.TerritoryType);
 			int columnCount = eurekaTerritory ? 5 : 6;
+			bool delubrumTerritory = delubrumTerritories.Contains(Services.ClientState.TerritoryType);
 
 
 			List<CharRow> charRowList = GenerateRows(playerCharacters, actionSheet, itemSheet, configuration.TargetRangeLimit);
@@ -132,8 +135,9 @@ namespace ActionViewer.Functions
 					if ((searchText == string.Empty ||
 							(row.statusInfo.rightIconID != 33 && (row.statusInfo.rightLuminaStatusInfo.Value.Name.ExtractText().ToLowerInvariant().IndexOf(searchText.ToLowerInvariant()) != -1)) ||
 							(row.statusInfo.leftIconID != 33 && (row.statusInfo.leftLuminaStatusInfo.Value.Name.ExtractText().ToLowerInvariant().IndexOf(searchText.ToLowerInvariant()) != -1))) &&
-						(filter == "none" || (filter == "noEss" &&
-							row.statusInfo.essenceIconID == 26))
+						(filter == "none" || 
+						// in DR we want to also filter out non-pure essences. Gambler is luckily the first pure essence by ID so it's easy to filter
+						(filter == "noEss" && (row.statusInfo.essenceIconID == 26 || (delubrumTerritory && row.statusInfo.essenceId < 2435))))
 						)
 					{
 
