@@ -93,7 +93,7 @@ namespace ActionViewer.Functions
 			return charRowList;
 		}
 
-		public static void GenerateStatusTable(List<IPlayerCharacter> playerCharacters, string searchText, bool anonymousMode, bool enableTooltips, bool targetRangeLimit, ExcelSheet<Lumina.Excel.Sheets.Action> actionSheet, ExcelSheet<Lumina.Excel.Sheets.Item> itemSheet, string filter = "none")
+		public static void GenerateStatusTable(List<IPlayerCharacter> playerCharacters, string searchText, Configuration configuration, ExcelSheet<Lumina.Excel.Sheets.Action> actionSheet, ExcelSheet<Lumina.Excel.Sheets.Item> itemSheet, string filter = "none")
 		{
 			ImGuiTableFlags tableFlags = ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg | ImGuiTableFlags.Sortable;// | ImGuiTableFlags.SizingFixedFit;
 			var iconSize = ImGui.GetTextLineHeight() * 2f;
@@ -102,12 +102,12 @@ namespace ActionViewer.Functions
 			int columnCount = eurekaTerritory ? 5 : 6;
 
 
-			List<CharRow> charRowList = GenerateRows(playerCharacters, actionSheet, itemSheet, targetRangeLimit);
+			List<CharRow> charRowList = GenerateRows(playerCharacters, actionSheet, itemSheet, configuration.TargetRangeLimit);
 
-			if (ImGui.BeginTable("table1", anonymousMode ? columnCount - 1 : columnCount, tableFlags))
+			if (ImGui.BeginTable("table1", configuration.AnonymousMode ? columnCount - 1 : columnCount, tableFlags))
 			{
 				ImGui.TableSetupColumn("Job", ImGuiTableColumnFlags.WidthFixed, 34f, (int)charColumns.Job);
-				if (!anonymousMode)
+				if (!configuration.AnonymousMode)
 				{
 					ImGui.TableSetupColumn("Name", ImGuiTableColumnFlags.WidthStretch | ImGuiTableColumnFlags.PreferSortDescending, 1f, (int)charColumns.Name);
 				}
@@ -163,7 +163,7 @@ namespace ActionViewer.Functions
 						{
 							Plugin.TargetManager.Target = row.character;
 						}
-						if (!anonymousMode)
+						if (!configuration.AnonymousMode)
 						{
 							ImGui.TableNextColumn();
 							ImGui.Selectable(row.playerName, false);
@@ -188,7 +188,7 @@ namespace ActionViewer.Functions
 							ImGui.Image(
 								Plugin.TextureProvider.GetFromGameIcon(new GameIconLookup(row.statusInfo.essenceIconID)).GetWrapOrEmpty().ImGuiHandle,
 								iconSizeVec, Vector2.Zero, Vector2.One);
-							if (enableTooltips && ImGui.IsItemHovered(ImGuiHoveredFlags.AllowWhenDisabled) && row.statusInfo.essenceName != null)
+							if (configuration.Tooltips && ImGui.IsItemHovered(ImGuiHoveredFlags.AllowWhenDisabled) && row.statusInfo.essenceName != null)
 							{
 								ImGui.SetTooltip(row.statusInfo.essenceName);
 							}
@@ -199,7 +199,7 @@ namespace ActionViewer.Functions
 						ImGui.Image(
 							Plugin.TextureProvider.GetFromGameIcon(new GameIconLookup(row.statusInfo.leftIconID)).GetWrapOrEmpty().ImGuiHandle,
 							iconSizeVec, Vector2.Zero, Vector2.One);
-						if (enableTooltips && ImGui.IsItemHovered(ImGuiHoveredFlags.AllowWhenDisabled) && row.statusInfo.leftLuminaStatusInfo != null)
+						if (configuration.Tooltips && ImGui.IsItemHovered(ImGuiHoveredFlags.AllowWhenDisabled) && row.statusInfo.leftLuminaStatusInfo != null)
 						{
 							ImGui.SetTooltip(row.statusInfo.leftLuminaStatusInfo.Value.Name.ExtractText());
 
@@ -208,7 +208,7 @@ namespace ActionViewer.Functions
 						ImGui.Image(
 							Plugin.TextureProvider.GetFromGameIcon(new GameIconLookup(row.statusInfo.rightIconID)).GetWrapOrEmpty().ImGuiHandle,
 							iconSizeVec, Vector2.Zero, Vector2.One);
-						if (enableTooltips && ImGui.IsItemHovered(ImGuiHoveredFlags.AllowWhenDisabled) && row.statusInfo.rightLuminaStatusInfo != null)
+						if (configuration.Tooltips && ImGui.IsItemHovered(ImGuiHoveredFlags.AllowWhenDisabled) && row.statusInfo.rightLuminaStatusInfo != null)
 						{
 							ImGui.SetTooltip(row.statusInfo.rightLuminaStatusInfo.Value.Name.ExtractText());
 
