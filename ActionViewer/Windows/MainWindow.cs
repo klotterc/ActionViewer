@@ -19,6 +19,11 @@ public class MainWindow : Window
      */
 	private List<ushort> territoryTypes = new List<ushort>() { 920, 936, 937, 975, 795, 827 };
 	private static List<ushort> eurekaTerritories = new List<ushort>() { 795, 827 };
+	private List<uint> tanks = new List<uint>() { 1, 3, 12, 17 };
+	private List<uint> healers = new List<uint>() { 6, 9, 13, 20 };
+	private List<uint> casterDPS = new List<uint>() { 7, 8, 15, 22 };
+	private List<uint> melee = new List<uint>() { 2, 4, 10, 14, 19, 21 };
+	private List<uint> physRanged = new List<uint>() { 5, 11, 18 };
 
 	public MainWindow(Plugin plugin) : base("ActionViewer")
 	{
@@ -34,22 +39,22 @@ public class MainWindow : Window
 		if (eurekaTerritories.Contains(Services.ClientState.TerritoryType))
 		{
 			this.tabs = new List<MainWindowTab> {
-			new MainTab(this.plugin),
-			new TankTab(this.plugin),
-			new HealerTab(this.plugin),
-			new MeleeTab(this.plugin),
-			new PhysRangedTab(this.plugin),
-			new CasterDPSTab(this.plugin)
+			new GeneratedTab(this.plugin, "Main"),
+			new GeneratedTab(this.plugin, "Tanks", tanks),
+			new GeneratedTab(this.plugin, "Healers", healers),
+			new GeneratedTab(this.plugin, "Melee", melee),
+			new GeneratedTab(this.plugin, "Phys Ranged", physRanged),
+			new GeneratedTab(this.plugin, "Caster", casterDPS),
 			};
 		} else {
 			this.tabs = new List<MainWindowTab> {
-			new MainTab(this.plugin),
-			new NoEssenceTab(this.plugin),
-			new TankTab(this.plugin),
-			new HealerTab(this.plugin),
-			new MeleeTab(this.plugin),
-			new PhysRangedTab(this.plugin),
-			new CasterDPSTab(this.plugin)
+			new GeneratedTab(this.plugin, "Main"),
+			new GeneratedTab(this.plugin, "No Ess."),
+			new GeneratedTab(this.plugin, "Tanks", tanks),
+			new GeneratedTab(this.plugin, "Healers", healers),
+			new GeneratedTab(this.plugin, "Melee", melee),
+			new GeneratedTab(this.plugin, "Phys Ranged", physRanged),
+			new GeneratedTab(this.plugin, "Caster", casterDPS),
 			};
 		}
 	}
